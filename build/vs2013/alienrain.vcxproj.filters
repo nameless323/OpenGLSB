@@ -10,4 +10,9 @@
       <Filter>Headers</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Shad.frag">
+      <Filter>Headers</Filter>
+    </None>
+  </ItemGroup>
 </Project>
