@@ -16,13 +16,19 @@ GLuint CompileShaders()
 	GLuint fragmentShader;
 	GLuint program;
 
-	static const GLchar* vertexShaderSource[] = 
+	static const GLchar* vertexShaderSource[] =
 	{
 		"#version 430 core \n"
 		"\n"
 		"void main(void) \n"
 		"{ \n"
-		"	gl_Position = vec4(0.0, 0.0, 0.5, 1.0); \n"
+			"const vec4 vertices[3] = vec4[3] \n"
+									"( \n"
+										"vec4(0.25, -0.25, 0.5, 1.0), \n"
+										"vec4(-0.25, -0.25, 0.5, 1.0), \n"
+										"vec4(0.25, 0.25, 0.5, 1.0) \n"
+									"); \n"
+		"	gl_Position = vertices[gl_VertexID]; \n"
 		"} \n" 
 	};
 	static const GLchar* fragmentShaderSource[] =
@@ -70,7 +76,7 @@ public:
 		//const GLfloat red[] = {0.0f, 0.0f, 0.0f, 1.0f};
 		glClearBufferfv(GL_COLOR, 0, red);
 		glUseProgram(_renderingProgram);
-		glDrawArrays(GL_POINTS, 0, 1);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 		//glUseProgram(0);
 	}
 	void shutdown()

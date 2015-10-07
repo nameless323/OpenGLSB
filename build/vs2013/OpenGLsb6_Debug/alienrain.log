@@ -1,27 +1,14 @@
-﻿Build started 06.10.2015 20:24:15.
+﻿Build started 07.10.2015 14:35:42.
      1>Project "C:\Users\nameless\ClionProjects\OpenGlSB\build\vs2013\alienrain.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"OpenGLsb6_Debug\\" /Fd"OpenGLsb6_Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\MySrc\GlWindow.cpp
          GlWindow.cpp
-     1>c:\users\nameless\clionprojects\openglsb\mysrc\glwindow.cpp(18): warning C4244: 'initializing' : conversion from 'double' to 'const GLfloat', possible loss of data
+     1>c:\users\nameless\clionprojects\openglsb\mysrc\glwindow.cpp(75): warning C4244: 'initializing' : conversion from 'double' to 'const GLfloat', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\nameless\ClionProjects\OpenGlSB\bin\OpenGLsb6_dbg.exe" /INCREMENTAL /NOLOGO sb6_d32.lib GLFW_d32.lib GLFW_r32.lib opengl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\nameless\ClionProjects\OpenGlSB\bin\OpenGLsb6_dbg.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\nameless\ClionProjects\OpenGlSB\bin\OpenGLsb6_dbg.lib" /MACHINE:X86 OpenGLsb6_Debug\GlWindow.obj
-     1>GLFW_d32.lib(enable.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'GLFW_d32.lib(enable.obj)' or at 'C:\Users\nameless\ClionProjects\OpenGlSB\bin\vc100.pdb'; linking object as if no debug info
-     1>GLFW_d32.lib(fullscreen.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'GLFW_d32.lib(fullscreen.obj)' or at 'C:\Users\nameless\ClionProjects\OpenGlSB\bin\vc100.pdb'; linking object as if no debug info
-     1>GLFW_d32.lib(glext.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'GLFW_d32.lib(glext.obj)' or at 'C:\Users\nameless\ClionProjects\OpenGlSB\bin\vc100.pdb'; linking object as if no debug info
-     1>GLFW_d32.lib(init.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'GLFW_d32.lib(init.obj)' or at 'C:\Users\nameless\ClionProjects\OpenGlSB\bin\vc100.pdb'; linking object as if no debug info
-     1>GLFW_d32.lib(input.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'GLFW_d32.lib(input.obj)' or at 'C:\Users\nameless\ClionProjects\OpenGlSB\bin\vc100.pdb'; linking object as if no debug info
-     1>GLFW_d32.lib(time.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'GLFW_d32.lib(time.obj)' or at 'C:\Users\nameless\ClionProjects\OpenGlSB\bin\vc100.pdb'; linking object as if no debug info
-     1>GLFW_d32.lib(win32_enable.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'GLFW_d32.lib(win32_enable.obj)' or at 'C:\Users\nameless\ClionProjects\OpenGlSB\bin\vc100.pdb'; linking object as if no debug info
-     1>GLFW_d32.lib(win32_fullscreen.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'GLFW_d32.lib(win32_fullscreen.obj)' or at 'C:\Users\nameless\ClionProjects\OpenGlSB\bin\vc100.pdb'; linking object as if no debug info
-     1>GLFW_d32.lib(win32_glext.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'GLFW_d32.lib(win32_glext.obj)' or at 'C:\Users\nameless\ClionProjects\OpenGlSB\bin\vc100.pdb'; linking object as if no debug info
-     1>GLFW_d32.lib(win32_init.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'GLFW_d32.lib(win32_init.obj)' or at 'C:\Users\nameless\ClionProjects\OpenGlSB\bin\vc100.pdb'; linking object as if no debug info
-     1>GLFW_d32.lib(win32_time.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'GLFW_d32.lib(win32_time.obj)' or at 'C:\Users\nameless\ClionProjects\OpenGlSB\bin\vc100.pdb'; linking object as if no debug info
-     1>GLFW_d32.lib(win32_window.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'GLFW_d32.lib(win32_window.obj)' or at 'C:\Users\nameless\ClionProjects\OpenGlSB\bin\vc100.pdb'; linking object as if no debug info
-     1>GLFW_d32.lib(window.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'GLFW_d32.lib(window.obj)' or at 'C:\Users\nameless\ClionProjects\OpenGlSB\bin\vc100.pdb'; linking object as if no debug info
          alienrain.vcxproj -> C:\Users\nameless\ClionProjects\OpenGlSB\bin\OpenGLsb6_dbg.exe
      1>Done Building Project "C:\Users\nameless\ClionProjects\OpenGlSB\build\vs2013\alienrain.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.74
+Time Elapsed 00:00:00.68
