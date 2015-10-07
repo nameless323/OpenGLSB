@@ -31,7 +31,7 @@ GLuint CompileShaders()
 		"out vec4 color; \n"
 		"void main(void) \n"
 		"{ \n"
-		"	color = vec4(0.0, 0.8, 1.0, 1.0); \n"
+		"	color = vec4(1.0, 0.0, 0.0, 1.0); \n"
 		"} \n"
 	};
 
@@ -57,14 +57,30 @@ GLuint CompileShaders()
 class GlWindow : public sb6::application
 {
 public:
+	void startup()
+	{
+		_renderingProgram = CompileShaders();
+		glGenVertexArrays(1, &_vao);
+		glBindVertexArray(_vao);
+		glPointSize(40.0f);
+	}
 	void render(double currentTime)
 	{
-		//
 		const GLfloat red[] = {sin(currentTime) * 0.5f + 0.5f, cos(currentTime) * 0.5f + 0.5f, 0.0f, 1.0f};
-		float val = red[0];
-		Log(val);
+		//const GLfloat red[] = {0.0f, 0.0f, 0.0f, 1.0f};
 		glClearBufferfv(GL_COLOR, 0, red);
+		glUseProgram(_renderingProgram);
+		glDrawArrays(GL_POINTS, 0, 1);
+		//glUseProgram(0);
 	}
+	void shutdown()
+	{
+		glDeleteProgram(_renderingProgram);
+		glDeleteVertexArrays(1, &_vao);
+	}
+private:
+	GLuint _renderingProgram;
+	GLuint _vao;
 };
 
 DECLARE_MAIN(GlWindow);
