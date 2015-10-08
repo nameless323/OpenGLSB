@@ -2,6 +2,7 @@
 #include <cmath>
 #include <iostream>
 #include <sstream>
+#include <shader.h>
 
 void Log(float arg)
 {
@@ -10,45 +11,84 @@ void Log(float arg)
 	OutputDebugString(wss.str().c_str());
 }
 
+GLuint load(const char * filename, GLenum shader_type, bool check_errors = true)
+{
+	
+	GLuint result = 0;
+	FILE * fp;
+	size_t filesize;
+	char * data;
+
+	fp = fopen(filename, "rb");
+
+	if (!fp)
+	{
+		OutputDebugStringA("::::::::::::::::::::::::::::::lool\n");
+		return 0;
+	}
+	fseek(fp, 0, SEEK_END);
+	filesize = ftell(fp);
+	fseek(fp, 0, SEEK_SET);
+
+	data = new char[filesize + 1];
+
+	if (!data)
+		goto fail_data_alloc;
+
+	fread(data, 1, filesize, fp);
+	data[filesize] = 0;
+	fclose(fp);
+
+	result = glCreateShader(shader_type);
+
+	if (!result)
+		goto fail_shader_alloc;
+
+	glShaderSource(result, 1, &data, NULL);
+
+	delete[] data;
+
+	glCompileShader(result);
+
+	if (check_errors)
+	{
+		GLint status = 0;
+		glGetShaderiv(result, GL_COMPILE_STATUS, &status);
+
+		if (!status)
+		{
+			char buffer[4096];
+			glGetShaderInfoLog(result, 4096, NULL, buffer);
+#ifdef _WIN32
+			OutputDebugStringA(filename);
+			OutputDebugStringA(":");
+			OutputDebugStringA(buffer);
+			OutputDebugStringA("\n");
+#else
+			fprintf(stderr, "%s: %s\n", filename, buffer);
+#endif
+			goto fail_compile_shader;
+		}
+	}
+
+	return result;
+
+fail_compile_shader:
+	glDeleteShader(result);
+
+fail_shader_alloc:;
+fail_data_alloc:
+	return result;
+}
+
 GLuint CompileShaders()
 {
 	GLuint vertexShader;
 	GLuint fragmentShader;
 	GLuint program;
 
-	static const GLchar* vertexShaderSource[] =
-	{
-		"#version 430 core \n"
-		"\n"
-		"void main(void) \n"
-		"{ \n"
-			"const vec4 vertices[3] = vec4[3] \n"
-									"( \n"
-										"vec4(0.25, -0.25, 0.5, 1.0), \n"
-										"vec4(-0.25, -0.25, 0.5, 1.0), \n"
-										"vec4(0.25, 0.25, 0.5, 1.0) \n"
-									"); \n"
-		"	gl_Position = vertices[gl_VertexID]; \n"
-		"} \n" 
-	};
-	static const GLchar* fragmentShaderSource[] =
-	{
-		"#version 430 core \n"
-		"out vec4 color; \n"
-		"void main(void) \n"
-		"{ \n"
-		"	color = vec4(1.0, 0.0, 0.0, 1.0); \n"
-		"} \n"
-	};
-
-	vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, vertexShaderSource, NULL);
-	glCompileShader(vertexShader);
-
-	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, fragmentShaderSource, NULL);
-	glCompileShader(fragmentShader);
-
+	vertexShader = sb6::shader::load("Shaders/Shader1.vert", GL_VERTEX_SHADER);
+	fragmentShader = sb6::shader::load("Shaders/Shader1.frag", GL_FRAGMENT_SHADER);
 	program = glCreateProgram();
 	glAttachShader(program, vertexShader);
 	glAttachShader(program, fragmentShader);
@@ -76,6 +116,8 @@ public:
 		//const GLfloat red[] = {0.0f, 0.0f, 0.0f, 1.0f};
 		glClearBufferfv(GL_COLOR, 0, red);
 		glUseProgram(_renderingProgram);
+		GLfloat offset[] = { sin(currentTime) * 0.5f, cos(currentTime) * 0.5f, 0.0f, 0.0f };
+		glVertexAttrib4fv(0, offset);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 		//glUseProgram(0);
 	}
