@@ -89,6 +89,7 @@ GLuint CompileShaders()
 
 	vertexShader = sb6::shader::load("Shaders/Shader1.vert", GL_VERTEX_SHADER);
 	fragmentShader = sb6::shader::load("Shaders/Shader1.frag", GL_FRAGMENT_SHADER);
+
 	program = glCreateProgram();
 	glAttachShader(program, vertexShader);
 	glAttachShader(program, fragmentShader);
@@ -112,12 +113,13 @@ public:
 	}
 	void render(double currentTime)
 	{
-		const GLfloat red[] = {sin(currentTime) * 0.5f + 0.5f, cos(currentTime) * 0.5f + 0.5f, 0.0f, 1.0f};
-		//const GLfloat red[] = {0.0f, 0.0f, 0.0f, 1.0f};
-		glClearBufferfv(GL_COLOR, 0, red);
+		const GLfloat bckColor[] = {sin(currentTime) * 0.5f + 0.5f, cos(currentTime) * 0.5f + 0.5f, 0.0f, 1.0f};
+		glClearBufferfv(GL_COLOR, 0, bckColor);
 		glUseProgram(_renderingProgram);
 		GLfloat offset[] = { sin(currentTime) * 0.5f, cos(currentTime) * 0.5f, 0.0f, 0.0f };
+		GLfloat color[] = { cos(currentTime) * 0.5f + 0.5f, sin(currentTime) * 0.5f + 0.5f, 0.0f, 1.0f };
 		glVertexAttrib4fv(0, offset);
+		glVertexAttrib4fv(1, color);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 		//glUseProgram(0);
 	}
