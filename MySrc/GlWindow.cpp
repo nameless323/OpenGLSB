@@ -87,24 +87,29 @@ GLuint CompileShaders()
 	GLuint fragmentShader;
 	GLuint tesControlShader;
 	GLuint tesEvalShader;
+	GLuint geomShader;
 	GLuint program;
+
 
 	vertexShader = sb6::shader::load("Shaders/Shader1.vert", GL_VERTEX_SHADER);
 	fragmentShader = sb6::shader::load("Shaders/Shader1.frag", GL_FRAGMENT_SHADER);
 	tesControlShader = sb6::shader::load("Shaders/Shader1.tesc", GL_TESS_CONTROL_SHADER);
 	tesEvalShader = sb6::shader::load("Shaders/Shader1.tese", GL_TESS_EVALUATION_SHADER);
+	geomShader = sb6::shader::load("Shaders/Shader1.geom", GL_GEOMETRY_SHADER);
 
 	program = glCreateProgram();
 	glAttachShader(program, vertexShader);
 	glAttachShader(program, fragmentShader);
 	glAttachShader(program, tesControlShader);
 	glAttachShader(program, tesEvalShader);
+	glAttachShader(program, geomShader);
 	glLinkProgram(program);
 
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 	glDeleteShader(tesControlShader);
 	glDeleteShader(tesEvalShader);
+	glDeleteShader(geomShader);
 
 	return program;
 }
@@ -119,7 +124,7 @@ public:
 		glBindVertexArray(_vao);
 		
 		//glPointSize(40.0f);
-	//	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}
 	void render(double currentTime)
 	{
@@ -135,8 +140,7 @@ public:
 		GLfloat color[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		glVertexAttrib4fv(0, offset);
 		glVertexAttrib4fv(1, color);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glPatchParameteri(GL_PATCH_VERTICES, 3);
+		
 		glDrawArrays(GL_PATCHES, 0, 3);
 		//glUseProgram(0);
 	}
