@@ -1,6 +1,10 @@
 #version 430 core
 layout (vertices = 3) out;
 
+in vec4 vcolor[];
+
+patch out vec4 tcColor;
+
 void main(void)
 {
 	if (gl_InvocationID == 0)
@@ -10,5 +14,7 @@ void main(void)
 		gl_TessLevelOuter[1] = 5.0;
 		gl_TessLevelOuter[2] = 5.0;
 	}
-	gl_out[gl_InvocationID].gl_Position = gl_in[gl_InvocationID].gl_Position;
+	gl_out [gl_InvocationID].gl_Position = gl_in [gl_InvocationID].gl_Position;
+
+	tcColor = vcolor[gl_InvocationID];
 }

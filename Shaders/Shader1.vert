@@ -2,10 +2,7 @@
 layout (location = 0) in vec4 offset;
 layout (location = 1) in vec4 color;
 
-out VS_OUT
-{
-	vec4 color;
-} vsOut;
+out vec4 vcolor;
 
 void main(void)
 {
@@ -16,5 +13,5 @@ void main(void)
 										vec4(0.25, 0.25, 0.5, 1.0)
 									);
 	gl_Position = vertices[gl_VertexID] + offset;
-	vsOut.color = color;
+	vcolor = color;
 }
