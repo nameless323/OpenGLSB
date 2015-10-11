@@ -4,15 +4,10 @@ layout (location = 0) in vec4 offset;
 layout (location = 1) in vec4 color;
 
 out vec4 col;
+layout (location = 5) in vec4 inputPosition;
 
 void main(void)
-{
-	const vec4 vertices[3] = vec4[3]
-									( 
-										vec4(0.25, -0.25, 0.5, 1.0),
-										vec4(-0.25, -0.25, 0.5, 1.0),
-										vec4(0.25, 0.25, 0.5, 1.0)
-									);
-	gl_Position = vertices[gl_VertexID] + offset;
+{	
+	gl_Position = inputPosition + offset;
 	col = color;
 }
