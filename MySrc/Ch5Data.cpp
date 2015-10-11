@@ -33,14 +33,14 @@ public:
 		glGenVertexArrays(1, &_vao);
 		glBindVertexArray(_vao);
 		const float vertices[] =
-		{
-				0.25 , -0.25 , 0.5 , 1.0 ,
-				-0.25 , -0.25 , 0.5 , 1.0 ,
-				0.25 , 0.25 , 0.5 , 1.0
-		};
+			{
+				0.25f , -0.25f , 0.5f , 1.0f ,
+				-0.25f , -0.25f , 0.5f , 1.0f ,
+				0.25f , 0.25f , 0.5f , 1.0f
+			};
 		glGenBuffers(1, &_buffer);
 		glBindBuffer(GL_ARRAY_BUFFER, _buffer);
-		glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(float), vertices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(float), nullptr, GL_STATIC_DRAW);
 		glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
 		glEnableVertexAttribArray(5);
 		//glPointSize(40.0f);
@@ -56,12 +56,19 @@ public:
 		glUseProgram(_renderingProgram);
 		//GLfloat offset[] = { sin(currentTime) * 0.5f, cos(currentTime) * 0.5f, 0.0f, 0.0f };
 		GLfloat offset[] = {0.0f, 0.0f, 0.0f, 0.0f};
-		
+
 		//GLfloat color[] = { cos(currentTime) * 0.5f + 0.5f, sin(currentTime) * 0.5f + 0.5f, 0.0f, 1.0f };
 		GLfloat color[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glVertexAttrib4fv(0, offset);
 		glVertexAttrib4fv(1, color);
-		glBindBuffer(GL_ARRAY_BUFFER, _buffer);
+		const float vertices[] =
+			{
+				0.25f * cosf(currentTime), -0.25f , 0.5f , 1.0f ,
+				-0.25f , -0.25f , 0.5f , 1.0f ,
+				0.25f , 0.25f , 0.5f , 1.0f
+			};
+		glBufferSubData(GL_ARRAY_BUFFER, 0, 12 * sizeof(float), vertices);
+		//glBindBuffer(GL_ARRAY_BUFFER, _buffer);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 		//glUseProgram(0);
 	}
