@@ -38,19 +38,19 @@ public:
 				-0.25f , -0.25f , 0.5f , 1.0f ,
 				0.25f , 0.25f , 0.5f , 1.0f
 			};
+
+		const Vertex verts[] =
+		{
+			Vertex(0.25f , -0.25f , 0.5f , 1.0f , 0.0f, 1.0f, 0.0f, 1.0f),
+			Vertex(-0.25f , -0.25f , 0.5f , 1.0f , 1.0f, 0.0f, 0.0f, 1.0f),
+			Vertex(0.25f , 0.25f , 0.5f , 1.0f , 0.0f, 0.0f, 1.0f, 1.0f),
+		};
 		glGenBuffers(1, &_vertsBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, _vertsBuffer);
-		glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(float), nullptr, GL_STATIC_DRAW);
-		glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+		glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
 		glEnableVertexAttribArray(5);
-
-		const float color[] = {0.0f, 1.0f, 0.0f, 0.0f,
-			1.0f, 0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, 0.0f };
-		glGenBuffers(1, &_colorBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(color), color, GL_STATIC_DRAW);
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(4 * sizeof(float)));
 		glEnableVertexAttribArray(1);
 
 		//glPointSize(40.0f);
@@ -78,8 +78,8 @@ public:
 				0.25f , 0.25f , 0.5f , 1.0f
 			};
 		//glClearBufferSubData(GL_ARRAY_BUFFER, GL_FLOAT, 0, sizeof(vertices), GL_RGBA, GL_FLOAT, vertices);
-		glBindBuffer(GL_ARRAY_BUFFER, _vertsBuffer);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, 12 * sizeof(float), vertices);
+		//glBindBuffer(GL_ARRAY_BUFFER, _vertsBuffer);
+		//glBufferSubData(GL_ARRAY_BUFFER, 0, 12 * sizeof(float), vertices);
 		//const float newVert[] = {-0.25f, 0.25f, 0.5f, 1.0f};
 		//glBufferSubData(GL_ARRAY_BUFFER, 12 * sizeof(float) - sizeof(newVert), sizeof(newVert), newVert);
 		//glBindBuffer(GL_ARRAY_BUFFER, _vertsBuffer);
@@ -106,6 +106,14 @@ private:
 	GLuint _vao;
 	GLuint _vertsBuffer;
 	GLuint _colorBuffer;
+	struct Vertex
+	{
+		float X, Y, Z, W;
+		float R, G, B, A;
+
+		Vertex(float x, float y, float z, float w, float r, float g, float b, float a) : X(x), Y(y), Z(z), W(w), R(r), G(g), B(b), A(a) 
+		{}
+	};
 };
 
 DECLARE_MAIN(Ch5Data);

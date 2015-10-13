@@ -19,10 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\MySrc\Ch5Data.cpp" />
     <ClCompile Include="..\..\MySrc\GlWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shad.frag" />
+    <None Include="..\..\Shaders\Ch5Data.frag" />
+    <None Include="..\..\Shaders\Ch5Data.vert" />
+    <None Include="..\..\Shaders\Shader1.frag" />
+    <None Include="..\..\Shaders\Shader1.geom" />
+    <None Include="..\..\Shaders\Shader1.tesc" />
+    <None Include="..\..\Shaders\Shader1.tese" />
+    <None Include="..\..\Shaders\Shader1.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{055EA0D3-2400-4477-8EC0-C5794D92C9BD}</ProjectGuid>
