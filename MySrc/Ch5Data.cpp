@@ -34,11 +34,11 @@ public:
 		glBindVertexArray(_vao);
 
 		const Vertex verts[] =
-		{
-			Vertex(0.25f , -0.25f , 0.5f , 1.0f , 0.0f, 1.0f, 0.0f, 1.0f),
-			Vertex(-0.25f , -0.25f , 0.5f , 1.0f , 1.0f, 0.0f, 0.0f, 1.0f),
-			Vertex(0.25f , 0.25f , 0.5f , 1.0f , 0.0f, 0.0f, 1.0f, 1.0f),
-		};
+			{
+				Vertex(0.25f, -0.25f, 0.5f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f),
+				Vertex(-0.25f, -0.25f, 0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f),
+				Vertex(0.25f, 0.25f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f),
+			};
 		glGenBuffers(1, &_vertsBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, _vertsBuffer);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
@@ -46,7 +46,6 @@ public:
 		glEnableVertexAttribArray(5);
 		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(4 * sizeof(float)));
 		glEnableVertexAttribArray(1);
-		
 	}
 
 	void render(double currentTime)
@@ -66,7 +65,11 @@ public:
 				-0.25f , -0.25f , 0.5f , 1.0f ,
 				0.25f , 0.25f , 0.5f , 1.0f
 			};
-		glUniform4f(2, 1.0f, 1.0f, 0.0f, 1.0f);
+		const float newColor[] = {1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f};
+		
+		glUniform4fv(20, 2, newColor);
+		glUniform1f(3, (cosf(currentTime)+1)*0.5f);
+		glUniform1f(5, (sinf(currentTime) + 1)*0.5f);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 	}
 
@@ -89,13 +92,15 @@ private:
 	GLuint _vao;
 	GLuint _vertsBuffer;
 	GLuint _colorBuffer;
+
 	struct Vertex
 	{
 		float X, Y, Z, W;
 		float R, G, B, A;
 
-		Vertex(float x, float y, float z, float w, float r, float g, float b, float a) : X(x), Y(y), Z(z), W(w), R(r), G(g), B(b), A(a) 
-		{}
+		Vertex(float x, float y, float z, float w, float r, float g, float b, float a) : X(x), Y(y), Z(z), W(w), R(r), G(g), B(b), A(a)
+		{
+		}
 	};
 };
 
