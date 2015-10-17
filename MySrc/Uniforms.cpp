@@ -2,10 +2,9 @@
 #include <cmath>
 #include <iostream>
 #include <sstream>
-#include <shader.h>
 #include "ShaderUtils.h"
 
-class Ch5Data : public sb6::application
+class Uniforms : public sb6::application
 {
 public:
 	void startup()
@@ -15,11 +14,11 @@ public:
 		glBindVertexArray(_vao);
 
 		const Vertex verts[] =
-			{
-				Vertex(0.25f, -0.25f, 0.5f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f),
-				Vertex(-0.25f, -0.25f, 0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f),
-				Vertex(0.25f, 0.25f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f),
-			};
+		{
+			Vertex(0.25f, -0.25f, 0.5f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f),
+			Vertex(-0.25f, -0.25f, 0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f),
+			Vertex(0.25f, 0.25f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f),
+		};
 		glGenBuffers(1, &_vertsBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, _vertsBuffer);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
@@ -31,25 +30,25 @@ public:
 
 	void render(double currentTime)
 	{
-		const GLfloat bckColor[] = {0.0f, 0.0f, 0.0f, 1.0f};
+		const GLfloat bckColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 
 		glClearBufferfv(GL_COLOR, 0, bckColor);
 		glUseProgram(_renderingProgram);
-		GLfloat offset[] = {0.0f, 0.0f, 0.0f, 0.0f};
+		GLfloat offset[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
-		GLfloat color[] = {1.0f, 1.0f, 1.0f, 1.0f};
+		GLfloat color[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		glVertexAttrib4fv(0, offset);
 		glVertexAttrib4fv(1, color);
 		const float vertices[] =
-			{
-				0.25f * cosf(currentTime), -0.25f , 0.5f , 1.0f ,
-				-0.25f , -0.25f , 0.5f , 1.0f ,
-				0.25f , 0.25f , 0.5f , 1.0f
-			};
-		const float newColor[] = {1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f};
-		
+		{
+			0.25f * cosf(currentTime), -0.25f , 0.5f , 1.0f ,
+			-0.25f , -0.25f , 0.5f , 1.0f ,
+			0.25f , 0.25f , 0.5f , 1.0f
+		};
+		const float newColor[] = { 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f };
+
 		glUniform4fv(20, 2, newColor);
-		glUniform1f(3, (cosf(currentTime)+1)*0.5f);
+		glUniform1f(3, (cosf(currentTime) + 1)*0.5f);
 		glUniform1f(5, (sinf(currentTime) + 1)*0.5f);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 	}
@@ -85,5 +84,5 @@ private:
 	};
 };
 
-//DECLARE_MAIN(Ch5Data);
+DECLARE_MAIN(Uniforms);
 
