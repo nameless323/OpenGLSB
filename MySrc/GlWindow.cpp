@@ -4,13 +4,6 @@
 #include <sstream>
 #include <shader.h>
 
-void Log(float arg)
-{
-	std::wstringstream wss;
-	wss << arg << std::endl;
-	OutputDebugString(wss.str().c_str());
-}
-
 GLuint CompileShaders()
 {
 	GLuint vertexShader;

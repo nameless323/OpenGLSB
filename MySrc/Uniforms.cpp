@@ -2,7 +2,7 @@
 #include <cmath>
 #include <iostream>
 #include <sstream>
-#include "ShaderUtils.h"
+#include "Utils.h"
 
 class Uniforms : public sb6::application
 {
@@ -42,6 +42,54 @@ public:
 		glBufferData(GL_ARRAY_BUFFER, sizeof(verts2), verts2, GL_STATIC_DRAW);
 		glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
 		glEnableVertexAttribArray(5);
+
+		const GLchar* uniformNames[4] =
+		{
+			"UniBlockStdv1.col",
+			"UniBlockStdv1.colVec",
+			"UniBlockStdv1.colArr",
+			"UniBlockStdv1.colMat"
+		};
+		GLuint uniformIndices[4];
+		glGetUniformIndices(_renderingProgram1, 4, uniformNames, uniformIndices);
+
+		GLint offsets[4];
+		GLint arrayStrides[4];
+		GLint matrixStrides[4];
+		glGetActiveUniformsiv(_renderingProgram1, 4, uniformIndices, GL_UNIFORM_OFFSET, offsets);
+		glGetActiveUniformsiv(_renderingProgram1, 4, uniformIndices, GL_UNIFORM_ARRAY_STRIDE, arrayStrides);
+		glGetActiveUniformsiv(_renderingProgram1, 4, uniformIndices, GL_UNIFORM_MATRIX_STRIDE, matrixStrides);
+		char* buffer = (char*)malloc(4096);
+		*((float*)(buffer + offsets[0])) = 0.7f;
+
+		*((float*)(buffer + offsets[1])) = 1.0f;
+		*((float*)(buffer + offsets[1] + sizeof(GLfloat))) = 0.0f;
+		*((float*)(buffer + offsets[1] + 2* sizeof(GLfloat))) = 0.0f;
+
+		*((float*)(buffer + offsets[2])) = 0.0f;
+		*((float*)(buffer + offsets[2] + arrayStrides[2])) = 1.0f;
+		*((float*)(buffer + offsets[2] + 2* arrayStrides[2])) = 0.0f;
+
+		float mat[16] =
+		{
+			1.0f, 0.0f, 0.0f, 1.0f,
+			0.0f, 1.0f, 0.0f, 1.0f,
+			0.0f, 0.0f, 1.0f, 1.0f,
+			1.0f, 1.0f, 1.0f, 1.0f,
+		};
+
+		int matOffset = offsets[3];
+		int columnStride = matrixStrides[3];
+		for (int i = 0; i < 4; i++)
+		{
+			matOffset += i*columnStride;
+			*((float*)(buffer + matOffset)) = mat[i * 4];
+			*((float*)(buffer + matOffset + sizeof(GLfloat))) = mat[i * 4 + 1];
+			*((float*)(buffer + matOffset + 2* sizeof(GLfloat))) = mat[i * 4 + 2];
+			*((float*)(buffer + matOffset + 3* sizeof(GLfloat))) = mat[i * 4 + 3];
+		}
+
+		free(buffer);
 	}
 
 	void render(double currentTime)

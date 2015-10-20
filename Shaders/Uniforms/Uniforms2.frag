@@ -5,7 +5,7 @@ layout(location = 0) uniform vec4 uniformColor;
 layout(std140, binding = 0) uniform UniBlockStd
 {
 	float col;
-	vec4 colVec;
+	vec3 colVec;
 	float[3] colArr;
 	mat4 colMat;
 } stdVal;

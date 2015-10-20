@@ -3,7 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <shader.h>
-#include "ShaderUtils.h"
+#include "Utils.h"
 
 class Ch5Data : public sb6::application
 {
