@@ -82,20 +82,20 @@ public:
 		int columnStride = matrixStrides[3];
 		for (int i = 0; i < 4; i++)
 		{
-			matOffset += i*columnStride;
-			*((float*)(buffer + matOffset)) = mat[i * 4];
-			*((float*)(buffer + matOffset + sizeof(GLfloat))) = mat[i * 4 + 1];
-			*((float*)(buffer + matOffset + 2* sizeof(GLfloat))) = mat[i * 4 + 2];
-			*((float*)(buffer + matOffset + 3* sizeof(GLfloat))) = mat[i * 4 + 3];
+			GLuint offset = matOffset + columnStride*i;
+			*((float*)(buffer + offset)) = mat[i * 4];
+			*((float*)(buffer + offset + sizeof(GLfloat))) = mat[i * 4 + 1];
+			*((float*)(buffer + offset + 2* sizeof(GLfloat))) = mat[i * 4 + 2];
+			*((float*)(buffer + offset + 3* sizeof(GLfloat))) = mat[i * 4 + 3];
 		}
 		glGenBuffers(1, &_uniformBuffer1);
 		GLuint v1uIndex = glGetUniformBlockIndex(_renderingProgram1, "UniBlockStdv1");
-		glBindBufferBase(GL_UNIFORM_BUFFER, v1uIndex, _uniformBuffer1);
+		glBindBufferBase(GL_UNIFORM_BUFFER, 0, _uniformBuffer1); //bind _uniformBuffer1 to binding point 1 (index is not a block index!!!!)
 		glBufferData(GL_UNIFORM_BUFFER, offsets[3] + 4 * matrixStrides[3] + 4 * sizeof(GLfloat), buffer, GL_STATIC_DRAW);
 		
+		free(buffer);
 		glUniformBlockBinding(_renderingProgram1, v1uIndex, 0);
 
-		free(buffer);
 	}
 
 	void render(double currentTime)
