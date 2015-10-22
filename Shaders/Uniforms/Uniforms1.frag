@@ -2,7 +2,7 @@
 
 layout(location = 0) uniform vec4 uniformColor;
 
-layout(std140, binding = 0) uniform UniBlockStdv1
+layout(shared, binding = 0) uniform UniBlockStdv1
 {
 	float col;
 	vec3 colVec;
@@ -10,7 +10,7 @@ layout(std140, binding = 0) uniform UniBlockStdv1
 	mat4 colMat;
 } stdVal;
 
-layout(shared, binding = 1) uniform ShadedBlockStdv1
+layout(std140, binding = 1) uniform ShadedBlockStdv1
 {
 	float col;
 	vec4 colVec;
@@ -21,5 +21,5 @@ layout(shared, binding = 1) uniform ShadedBlockStdv1
 out vec4 color;
 void main(void)
 {
-	color = vec4(1.0, 0.0, 0.0, 1.0);
+	color = vec4(colVec);
 }

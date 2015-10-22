@@ -60,7 +60,7 @@ public:
 		glGetActiveUniformsiv(_renderingProgram1, 4, uniformIndices, GL_UNIFORM_ARRAY_STRIDE, arrayStrides);
 		glGetActiveUniformsiv(_renderingProgram1, 4, uniformIndices, GL_UNIFORM_MATRIX_STRIDE, matrixStrides);
 		char* buffer = (char*)malloc(4096);
-		*((float*)(buffer + offsets[0])) = 0.7f;
+		*((float*)(buffer + offsets[0])) = 1.0f;
 
 		*((float*)(buffer + offsets[1])) = 1.0f;
 		*((float*)(buffer + offsets[1] + sizeof(GLfloat))) = 0.0f;
@@ -88,6 +88,12 @@ public:
 			*((float*)(buffer + matOffset + 2* sizeof(GLfloat))) = mat[i * 4 + 2];
 			*((float*)(buffer + matOffset + 3* sizeof(GLfloat))) = mat[i * 4 + 3];
 		}
+		glGenBuffers(1, &_uniformBuffer1);
+		GLuint v1uIndex = glGetUniformBlockIndex(_renderingProgram1, "UniBlockStdv1");
+		glBindBufferBase(GL_UNIFORM_BUFFER, v1uIndex, _uniformBuffer1);
+		glBufferData(GL_UNIFORM_BUFFER, offsets[3] + 4 * matrixStrides[3] + 4 * sizeof(GLfloat), buffer, GL_STATIC_DRAW);
+		
+		glUniformBlockBinding(_renderingProgram1, v1uIndex, 0);
 
 		free(buffer);
 	}
@@ -143,7 +149,7 @@ private:
 	GLuint _vao2;
 	GLuint _vertsBuffer1;
 	GLuint _vertsBuffer2;
-
+	GLuint _uniformBuffer1;
 };
 
 DECLARE_MAIN(Uniforms);
