@@ -14,19 +14,30 @@ public:
 		glGenVertexArrays(1, &_vao);
 		glBindVertexArray(_vao);
 
-		const Vertex verts[] =
+		static const GLfloat positions[] =
 		{
-			Vertex(0.25f, -0.25f, 0.5f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f),
-			Vertex(-0.25f, -0.25f, 0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f),
-			Vertex(0.25f, 0.25f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f),
+			-0.25f, 0.25f, -0.25f,
+			-0.25f, -0.25f, -0.25f,
+			0.25f, -0.25f, -0.25f,
+
+			0.25f, -0.25f, -0.25f,
+			0.25f, 0.25f, -0.25f,
+			-0.25f, 0.25f, -0.25f,
+
+			-0.25f, 0.25f, -0.25f,
+			0.25f, 0.25f, -0.25f,
+			0.25f, 0.25f, 0.25f,
+
+			0.25f, 0.25f, 0.25f,
+			-0.25f, 0.25f, 0.25f,
+			-0.25f, 0.25f, -0.25f
 		};
+
 		glGenBuffers(1, &_vertsBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, _vertsBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(4 * sizeof(float)));
-		glEnableVertexAttribArray(1);
 	}
 
 	void render(double currentTime)
@@ -36,7 +47,7 @@ public:
 		glClearBufferfv(GL_COLOR, 0, bckColor);
 		glUseProgram(_renderingProgram);
 		
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
 
 	void shutdown()
@@ -44,7 +55,6 @@ public:
 		glDeleteProgram(_renderingProgram);
 
 		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
 
 		glBindVertexArray(0);
 		glDeleteVertexArrays(1, &_vao);
