@@ -89,13 +89,43 @@ public:
 			*((float*)(buffer + offset + 3* sizeof(GLfloat))) = mat[i * 4 + 3];
 		}
 		glGenBuffers(1, &_uniformBuffer1);
-		GLuint v1uIndex = glGetUniformBlockIndex(_renderingProgram1, "UniBlockStdv1");
 		glBindBufferBase(GL_UNIFORM_BUFFER, 0, _uniformBuffer1); //bind _uniformBuffer1 to binding point 1 (index is not a block index!!!!)
 		glBufferData(GL_UNIFORM_BUFFER, offsets[3] + 4 * matrixStrides[3] + 4 * sizeof(GLfloat), buffer, GL_STATIC_DRAW);
 		
 		free(buffer);
-		glUniformBlockBinding(_renderingProgram1, v1uIndex, 0);
+		buffer = (char*)malloc(4098);
+		GLint currentOffset = 0;
+		*(float*)buffer = 1.0f;
+		currentOffset += 4*sizeof(GLfloat);
+		*(float*)(buffer + currentOffset) = 0.0f;
+		*(float*)(buffer + currentOffset + sizeof(GLfloat)) = 0.0f;
+		*(float*)(buffer + currentOffset + 2*sizeof(GLfloat)) = 1.0f;
+		*(float*)(buffer + currentOffset + 3*sizeof(GLfloat)) = 1.0f;
+		currentOffset += 4 * sizeof(GLfloat);
+		*(float*)(buffer + currentOffset) = 0.0f;
+		*(float*)(buffer + currentOffset + 4*sizeof(GLfloat)) = 0.0f;
+		*(float*)(buffer + currentOffset + 8*sizeof(GLfloat)) = 0.7f;
+		currentOffset += 12 * sizeof(GLfloat);
+		GLuint stride = 4 * sizeof(GLfloat);
 
+		float matstd140[9] =
+		{
+			0.0f, 0.0f, 1.0f,
+			0.0f, 1.0f, 0.0f,
+			1.0f, 0.0f, 0.0f
+		};
+		for (int i = 0; i < 3; i++)
+		{
+			*(float*)(buffer + currentOffset) = matstd140[i * 3];
+			*(float*)(buffer + currentOffset + sizeof(GLfloat)) = matstd140[i * 3 + 1];
+			*(float*)(buffer + currentOffset + 2*sizeof(GLfloat)) = matstd140[i * 3 + 2];
+			currentOffset += stride;
+		}
+		glGenBuffers(1, &_uniformBufferstd140);
+		glBindBufferBase(GL_UNIFORM_BUFFER, 1, _uniformBufferstd140);
+		glBufferData(GL_UNIFORM_BUFFER, currentOffset, buffer, GL_STATIC_DRAW);
+		
+		free(buffer);
 	}
 
 	void render(double currentTime)
@@ -105,8 +135,6 @@ public:
 		glClearBufferfv(GL_COLOR, 0, bckColor);
 		
 		glBindVertexArray(_vao1);
-		glBindBuffer(GL_ARRAY_BUFFER, _vertsBuffer1);
-		glEnableVertexAttribArray(5);
 		glUseProgram(_renderingProgram1);
 		
 		const GLfloat color[] = { 1.0f, 1.0f, 0.0f, 1.0f };
@@ -114,8 +142,6 @@ public:
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 		
 		glBindVertexArray(_vao2);
-		glBindBuffer(GL_ARRAY_BUFFER, _vertsBuffer2);
-		glEnableVertexAttribArray(5);
 		glUseProgram(_renderingProgram2);
 
 		const GLfloat color2[] = { 0.0f, 0.0f, 1.0f, 1.0f };
@@ -150,6 +176,7 @@ private:
 	GLuint _vertsBuffer1;
 	GLuint _vertsBuffer2;
 	GLuint _uniformBuffer1;
+	GLuint _uniformBufferstd140;
 };
 
 DECLARE_MAIN(Uniforms);

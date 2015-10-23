@@ -15,11 +15,11 @@ layout(std140, binding = 1) uniform ShadedBlockStdv1
 	float col;
 	vec4 colVec;
 	float[3] colArr;
-	mat4 colMat;
+	mat3 colMat;
 } sharVal;
 
 out vec4 color;
 void main(void)
 {
-	color = vec4(stdVal.colMat[1]);
+	color = vec4(sharVal.colMat[1], 1.0);
 }
