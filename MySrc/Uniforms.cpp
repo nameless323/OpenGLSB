@@ -179,5 +179,5 @@ private:
 	GLuint _uniformBufferstd140;
 };
 
-DECLARE_MAIN(Uniforms);
+//DECLARE_MAIN(Uniforms);
 
