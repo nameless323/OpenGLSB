@@ -22,6 +22,6 @@ layout(std140, binding = 1) uniform ShadedBlockStdv1
 out vec4 color;
 void main(void)
 {
-	color = vec4(sharVal.colMat[0], 1.0);
-	//color = vCol;
+	//color = vec4(sharVal.colMat[0], 1.0);
+	color = vCol;
 }

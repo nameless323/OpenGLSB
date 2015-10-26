@@ -27,18 +27,21 @@ public:
 		glEnableVertexAttribArray(5);
 
 		glGenBuffers(1, &_vertsBufferV2);
+		glBindBuffer(GL_ARRAY_BUFFER, _vertsBufferV2);
 		const GLfloat colU[] =
 		{
 			1.0f, 1.0f, 0.0f, 1.0f,
-			0.35f, 1.0f, 0.0f, 1.0f,
+			0.35f, 0.0f, 0.0f, 1.0f,
 			0.0f, 0.0f, 1.0f, 1.0f
 		};
-		/*glBindVertexBuffer(3, _vertsBufferV2, 0, 4 * sizeof(GLfloat));
-		glVertexAttribFormat(10, 4, GL_FLOAT, GL_FALSE, 0);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(colU), colU, GL_STATIC_DRAW);
+		glBindVertexBuffer(3, _vertsBufferV2, 0, 4 * sizeof(GLfloat));
+
+		glVertexAttribFormat(1, 4, GL_FLOAT, GL_FALSE, 0);
 		glVertexAttribBinding(1, 3);
 		glEnableVertexAttribArray(1);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(colU), colU, GL_STATIC_DRAW);*/
-		
+
+
 		glGenVertexArrays(1, &_vao2);
 		glBindVertexArray(_vao2);
 		glGenBuffers(1, &_vertsBuffer2);
@@ -143,6 +146,14 @@ public:
 
 	void render(double currentTime)
 	{
+//		GLint maj;
+//		GLint min;
+//		glGetIntegerv(GL_MAJOR_VERSION, &maj);
+//		glGetIntegerv(GL_MINOR_VERSION, &min);
+//		std::wstringstream wss;
+//		wss << maj << "|" << min << std::endl;
+//		OutputDebugString(wss.str().c_str());
+
 		const GLfloat bckColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 
 		glClearBufferfv(GL_COLOR, 0, bckColor);
