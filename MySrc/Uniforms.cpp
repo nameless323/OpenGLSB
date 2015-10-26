@@ -35,6 +35,7 @@ public:
 			0.0f, 0.0f, 1.0f, 1.0f
 		};
 		glBufferData(GL_ARRAY_BUFFER, sizeof(colU), colU, GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexBuffer(3, _vertsBufferV2, 0, 4 * sizeof(GLfloat));
 
 		glVertexAttribFormat(1, 4, GL_FLOAT, GL_FALSE, 0);
@@ -205,5 +206,5 @@ private:
 	GLuint _uniformBufferstd140;
 };
 
-DECLARE_MAIN(Uniforms);
+//DECLARE_MAIN(Uniforms);
 
