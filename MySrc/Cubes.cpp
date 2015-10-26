@@ -80,5 +80,5 @@ private:
 	};
 };
 
-DECLARE_MAIN(Cubes);
+//DECLARE_MAIN(Cubes);
 

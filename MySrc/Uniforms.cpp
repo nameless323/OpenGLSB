@@ -16,7 +16,6 @@ public:
 
 		glGenBuffers(1, &_vertsBuffer1);
 		glBindBuffer(GL_ARRAY_BUFFER, _vertsBuffer1);
-
 		const GLfloat verts1[] =
 		{
 			-0.35f, 0.25f, 0.5f, 1.0f,
@@ -26,10 +25,22 @@ public:
 		glBufferData(GL_ARRAY_BUFFER, sizeof(verts1), verts1, GL_STATIC_DRAW);
 		glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
 		glEnableVertexAttribArray(5);
+
+		glGenBuffers(1, &_vertsBufferV2);
+		const GLfloat colU[] =
+		{
+			1.0f, 1.0f, 0.0f, 1.0f,
+			0.35f, 1.0f, 0.0f, 1.0f,
+			0.0f, 0.0f, 1.0f, 1.0f
+		};
+		/*glBindVertexBuffer(3, _vertsBufferV2, 0, 4 * sizeof(GLfloat));
+		glVertexAttribFormat(10, 4, GL_FLOAT, GL_FALSE, 0);
+		glVertexAttribBinding(1, 3);
+		glEnableVertexAttribArray(1);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(colU), colU, GL_STATIC_DRAW);*/
 		
 		glGenVertexArrays(1, &_vao2);
 		glBindVertexArray(_vao2);
-		
 		glGenBuffers(1, &_vertsBuffer2);
 		glBindBuffer(GL_ARRAY_BUFFER, _vertsBuffer2);
 
@@ -126,6 +137,8 @@ public:
 		glBufferData(GL_UNIFORM_BUFFER, currentOffset, buffer, GL_STATIC_DRAW);
 		
 		free(buffer);
+
+		
 	}
 
 	void render(double currentTime)
@@ -166,6 +179,7 @@ public:
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glDeleteBuffers(1, &_vertsBuffer1);
 		glDeleteBuffers(1, &_vertsBuffer2);
+		glDeleteBuffers(1, &_vertsBufferV2);
 	}
 
 private:
@@ -175,9 +189,10 @@ private:
 	GLuint _vao2;
 	GLuint _vertsBuffer1;
 	GLuint _vertsBuffer2;
+	GLuint _vertsBufferV2;
 	GLuint _uniformBuffer1;
 	GLuint _uniformBufferstd140;
 };
 
-//DECLARE_MAIN(Uniforms);
+DECLARE_MAIN(Uniforms);
 

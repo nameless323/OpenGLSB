@@ -1,6 +1,7 @@
 #version 430 core
 
 layout(location = 0) uniform vec4 uniformColor;
+in vec4 vCol;
 
 layout(shared, binding = 0) uniform UniBlockStdv1
 {
@@ -21,5 +22,6 @@ layout(std140, binding = 1) uniform ShadedBlockStdv1
 out vec4 color;
 void main(void)
 {
-	color = vec4(sharVal.colMat[1], 1.0);
+	color = vec4(sharVal.colMat[0], 1.0);
+	//color = vCol;
 }
