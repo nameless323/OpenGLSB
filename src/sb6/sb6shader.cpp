@@ -84,6 +84,7 @@ GLuint load(const char * filename, GLenum shader_type, bool check_errors)
             OutputDebugStringA(":");
             OutputDebugStringA(buffer);
             OutputDebugStringA("\n");
+
 #else
             fprintf(stderr, "%s: %s\n", filename, buffer);
 #endif
@@ -136,6 +137,7 @@ GLuint link_from_shaders(const GLuint * shaders,
 #ifdef _WIN32
             OutputDebugStringA(buffer);
             OutputDebugStringA("\n");
+
 #endif
             glDeleteProgram(program);
             return 0;

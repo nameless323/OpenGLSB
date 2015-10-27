@@ -20,16 +20,27 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\MySrc\Ch5Data.cpp" />
+    <ClCompile Include="..\..\MySrc\Cubes.cpp" />
     <ClCompile Include="..\..\MySrc\GlWindow.cpp" />
+    <ClCompile Include="..\..\MySrc\Uniforms.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Shaders\Ch5Data.frag" />
     <None Include="..\..\Shaders\Ch5Data.vert" />
+    <None Include="..\..\Shaders\Cubes\Cubes.frag" />
+    <None Include="..\..\Shaders\Cubes\Cubes.vert" />
     <None Include="..\..\Shaders\Shader1.frag" />
     <None Include="..\..\Shaders\Shader1.geom" />
     <None Include="..\..\Shaders\Shader1.tesc" />
     <None Include="..\..\Shaders\Shader1.tese" />
     <None Include="..\..\Shaders\Shader1.vert" />
+    <None Include="..\..\Shaders\Uniforms\Uniforms1.frag" />
+    <None Include="..\..\Shaders\Uniforms\Uniforms1.vert" />
+    <None Include="..\..\Shaders\Uniforms\Uniforms2.frag" />
+    <None Include="..\..\Shaders\Uniforms\Uniforms2.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\MySrc\Utils.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{055EA0D3-2400-4477-8EC0-C5794D92C9BD}</ProjectGuid>

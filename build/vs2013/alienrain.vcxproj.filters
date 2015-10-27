@@ -7,12 +7,24 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{6b920ed1-87cf-4978-b3c0-d394e6053e7d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\Unifroms">
+      <UniqueIdentifier>{a9abd809-f6ac-4ef1-9762-514e563933e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Cubes">
+      <UniqueIdentifier>{8c10e703-e418-4394-9813-5c31b5c68220}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\MySrc\GlWindow.cpp">
       <Filter>Headers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\MySrc\Ch5Data.cpp">
+      <Filter>Headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MySrc\Uniforms.cpp">
+      <Filter>Headers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MySrc\Cubes.cpp">
       <Filter>Headers</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,5 +50,28 @@
     <None Include="..\..\Shaders\Ch5Data.frag">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="..\..\Shaders\Uniforms\Uniforms1.vert">
+      <Filter>Shaders\Unifroms</Filter>
+    </None>
+    <None Include="..\..\Shaders\Uniforms\Uniforms1.frag">
+      <Filter>Shaders\Unifroms</Filter>
+    </None>
+    <None Include="..\..\Shaders\Uniforms\Uniforms2.frag">
+      <Filter>Shaders\Unifroms</Filter>
+    </None>
+    <None Include="..\..\Shaders\Uniforms\Uniforms2.vert">
+      <Filter>Shaders\Unifroms</Filter>
+    </None>
+    <None Include="..\..\Shaders\Cubes\Cubes.vert">
+      <Filter>Shaders\Cubes</Filter>
+    </None>
+    <None Include="..\..\Shaders\Cubes\Cubes.frag">
+      <Filter>Shaders\Cubes</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\MySrc\Utils.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
