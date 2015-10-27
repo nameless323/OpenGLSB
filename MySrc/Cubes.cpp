@@ -15,7 +15,8 @@ public:
 		glGenVertexArrays(1, &_vao);
 		glBindVertexArray(_vao);
 
-//		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LEQUAL);
 		static const GLfloat positions[] =
 		{
 			-0.25f, 0.25f, -0.25f, //back
@@ -99,7 +100,8 @@ public:
 		const GLfloat bckColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 		const GLfloat black[] = {0.0f, 0.0f, 0.0f, 0.0f};
 		glClearBufferfv(GL_COLOR, 0, bckColor);
-//		glClearBufferfv(GL_DEPTH, 0, black);
+		glClear(GL_DEPTH_BUFFER_BIT);
+		//glClearBufferfv(GL_DEPTH, 0, black);
 		
 		glUniformMatrix4fv(mvLocation, 1, GL_FALSE, mvMatrix);
 		glUniformMatrix4fv(projLocation, 1, GL_FALSE, projMatrix);
