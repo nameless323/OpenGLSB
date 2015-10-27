@@ -15,9 +15,10 @@ public:
 		glGenVertexArrays(1, &_vao);
 		glBindVertexArray(_vao);
 
+//		glEnable(GL_DEPTH_TEST);
 		static const GLfloat positions[] =
 		{
-			-0.25f, 0.25f, -0.25f,
+			-0.25f, 0.25f, -0.25f, //back
 			-0.25f, -0.25f, -0.25f,
 			0.25f, -0.25f, -0.25f,
 
@@ -25,13 +26,45 @@ public:
 			0.25f, 0.25f, -0.25f,
 			-0.25f, 0.25f, -0.25f,
 
-			-0.25f, 0.25f, -0.25f,
+			-0.25f, 0.25f, -0.25f, //up
 			0.25f, 0.25f, -0.25f,
 			0.25f, 0.25f, 0.25f,
 
 			0.25f, 0.25f, 0.25f,
 			-0.25f, 0.25f, 0.25f,
-			-0.25f, 0.25f, -0.25f
+			-0.25f, 0.25f, -0.25f,
+
+			-0.25f, 0.25f, -0.25f, //left
+			-0.25f, 0.25f, 0.25f,
+			-0.25f, -0.25f, -0.25f,
+
+			-0.25f, 0.25f, 0.25f,
+			-0.25f, -0.25f, 0.25f,
+			-0.25f, -0.25f, -0.25f,
+
+			0.25f, 0.25f, -0.25f, //right
+			0.25f, 0.25f, 0.25f,
+			0.25f, -0.25f, -0.25f,
+
+			0.25f, 0.25f, 0.25f,
+			0.25f, -0.25f, 0.25f,
+			0.25f, -0.25f, -0.25f,
+
+			-0.25f, 0.25f, 0.25f, //forward
+			-0.25f, -0.25f, 0.25f,
+			0.25f, -0.25f, 0.25f,
+
+			0.25f, -0.25f, 0.25f,
+			0.25f, 0.25f, 0.25f,
+			-0.25f, 0.25f, 0.25f,
+
+			-0.25f, -0.25f, -0.25f, //down
+			0.25f, -0.25f, -0.25f,
+			0.25f, -0.25f, 0.25f,
+
+			0.25f, -0.25f, 0.25f,
+			-0.25f, -0.25f, 0.25f,
+			-0.25f, -0.25f, -0.25f,
 		};
 
 		glGenBuffers(1, &_vertsBuffer);
@@ -64,8 +97,9 @@ public:
 			vmath::rotate((float)currentTime * 81.0f, 1.0f, 0.0f, 0.0f);
 
 		const GLfloat bckColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-
+		const GLfloat black[] = {0.0f, 0.0f, 0.0f, 0.0f};
 		glClearBufferfv(GL_COLOR, 0, bckColor);
+//		glClearBufferfv(GL_DEPTH, 0, black);
 		
 		glUniformMatrix4fv(mvLocation, 1, GL_FALSE, mvMatrix);
 		glUniformMatrix4fv(projLocation, 1, GL_FALSE, projMatrix);
