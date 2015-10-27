@@ -88,26 +88,32 @@ public:
 
 	void render(double currentTime)
 	{
-		float f = (float)currentTime * (float)M_PI * 0.1f;
-		vmath::mat4 mvMatrix =
-			vmath::translate(0.0f, 0.0f, -4.0f) *
-			vmath::translate(sinf(2.1f * f)*0.5f,
-				cosf(1.7f * f) * 0.5f,
-				sinf(1.3f*f) * cosf(1.5f * f) * 2.0f)*
-			vmath::rotate((float)currentTime * 45.0f, 0.0f, 1.0f, 0.0f) *
-			vmath::rotate((float)currentTime * 81.0f, 1.0f, 0.0f, 0.0f);
+		
 
 		const GLfloat bckColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-		const GLfloat black[] = {0.0f, 0.0f, 0.0f, 0.0f};
+		const GLfloat white[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glClearBufferfv(GL_COLOR, 0, bckColor);
-		glClear(GL_DEPTH_BUFFER_BIT);
-		//glClearBufferfv(GL_DEPTH, 0, black);
+		glClearBufferfv(GL_DEPTH, 0, white);
+//		glClear(GL_DEPTH_BUFFER_BIT);
 		
-		glUniformMatrix4fv(mvLocation, 1, GL_FALSE, mvMatrix);
 		glUniformMatrix4fv(projLocation, 1, GL_FALSE, projMatrix);
+
+		for (int i = 0; i < 24; i++)
+		{
+			float f = (float)i + (float)currentTime * 0.3f;
+			vmath::mat4 mvMatrix =
+				vmath::translate(0.0f, 0.0f, -4.0f) *
+				vmath::rotate((float)currentTime * 45.0f, 0.0f, 1.0f, 0.0f) *
+				vmath::rotate((float)currentTime * 21.0f, 1.0f, 0.0f, 0.0f)*
+				vmath::translate(sinf(2.1f * f)*0.5f,
+					cosf(1.7f * f) * 0.5f,
+					sinf(1.3f*f) * cosf(1.5f * f) * 2.0f);
+			glUniformMatrix4fv(mvLocation, 1, GL_FALSE, mvMatrix);	
 		
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
+
 		
-		glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
 
 	void shutdown()
