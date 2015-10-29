@@ -21,15 +21,33 @@ public:
 		glBindBuffer(GL_ARRAY_BUFFER, _vertsBuffer);
 		const GLfloat verts[] =
 		{
-			-0.35f, 0.25f, 0.5f, 1.0f,
-			0.15f, -0.25f, 0.5f, 1.0f,
-			-0.35f, -0.25f, 0.5f, 1.0f,
+			-0.5f, 0.5f, 0.5f, 1.0f,
+			-0.5f, -0.5f, 0.5f, 1.0f,
+			0.5f, -0.5f, 0.5f, 1.0f,
+
+			-0.5f, 0.5f, 0.5f, 1.0f,
+			0.5f, -0.5f, 0.5f, 1.0f,
+			0.5f, 0.5f, 0.5f, 1.0f
 		};
 		glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
-		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
+		glEnableVertexAttribArray(0);
 
 		glUseProgram(_renderingProgram);
+
+		glGenTextures(1, &_texture);
+
+		glBindTexture(GL_TEXTURE_2D, _texture);
+		glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA32F, 256, 256);
+		float* data = new float[256*256*4];
+		GenerateTexture(data, 256, 256);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 256, 256, GL_RGBA, GL_FLOAT, data);
+		delete[] data;
+		//glBindSampler(1, _texture);
+		//glActiveTexture(_texture);
+		glActiveTexture(GL_TEXTURE0 + 0);
+		glUniform1i(glGetUniformLocation(_renderingProgram, "s"), _texture);
 	}
 
 	void onResize(int w, int h)
@@ -39,15 +57,13 @@ public:
 
 	void render(double currentTime)
 	{
-
-
 		const GLfloat bckColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 		const GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		glClearBufferfv(GL_COLOR, 0, bckColor);
 		glClearBufferfv(GL_DEPTH, 0, white);
 		//		glClear(GL_DEPTH_BUFFER_BIT);
 
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 
 	}
@@ -65,16 +81,33 @@ public:
 		glDeleteBuffers(1, &_vertsBuffer);
 	}
 
+	void GenerateTexture(float * data, int width, int height)
+	{
+		int x, y;
+
+		for (y = 0; y < height; y++)
+		{
+			for (x = 0; x < width; x++)
+			{
+				data[(y * width + x) * 4 + 0] = (float)((x & y) & 0xFF) / 255.0f;
+				data[(y * width + x) * 4 + 1] = (float)((x | y) & 0xFF) / 255.0f;
+				data[(y * width + x) * 4 + 2] = (float)((x ^ y) & 0xFF) / 255.0f;
+				data[(y * width + x) * 4 + 3] = 1.0f;
+			}
+		}
+	}
+
 private:
 	GLuint _renderingProgram;
 	GLuint _vao;
 	GLuint _vertsBuffer;
 	GLuint _colorBuffer;
+	GLuint _texture;
 
 	vmath::mat4 projMatrix;
 	GLfloat mvLocation = 2;
 	GLfloat projLocation = 3;
-
+	
 };
 
 DECLARE_MAIN(Textures);
