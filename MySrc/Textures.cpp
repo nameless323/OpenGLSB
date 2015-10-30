@@ -38,16 +38,17 @@ public:
 		glGenTextures(1, &_texture);
 
 		glBindTexture(GL_TEXTURE_2D, _texture);
-		glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA32F, 256, 256);
+		glTexStorage2D(GL_TEXTURE_2D, 8, GL_RGBA32F, 256, 256);
 		float* data = new float[256*256*4];
 		GenerateTexture(data, 256, 256);
 		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 256, 256, GL_RGBA, GL_FLOAT, data);
-		delete[] data;
 		//glBindSampler(1, _texture);
 		//glActiveTexture(_texture);
-		glActiveTexture(GL_TEXTURE0 + 0);
-		glUniform1i(glGetUniformLocation(_renderingProgram, "s"), _texture);
+		//glActiveTexture(GL_TEXTURE0 + 0);
+		//glUniform1i(glGetUniformLocation(_renderingProgram, "s"), _texture);
+
+		delete[] data;
 	}
 
 	void onResize(int w, int h)
@@ -61,8 +62,8 @@ public:
 		const GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		glClearBufferfv(GL_COLOR, 0, bckColor);
 		glClearBufferfv(GL_DEPTH, 0, white);
-		//		glClear(GL_DEPTH_BUFFER_BIT);
-
+		//glClear(GL_DEPTH_BUFFER_BIT);
+		glUseProgram(_renderingProgram);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 
@@ -79,6 +80,7 @@ public:
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glDeleteBuffers(1, &_vertsBuffer);
+		glDeleteTextures(1, &_texture);
 	}
 
 	void GenerateTexture(float * data, int width, int height)
@@ -111,4 +113,3 @@ private:
 };
 
 DECLARE_MAIN(Textures);
-
