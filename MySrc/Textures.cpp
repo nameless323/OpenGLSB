@@ -34,19 +34,19 @@ public:
 		glEnableVertexAttribArray(0);
 
 		glUseProgram(_renderingProgram);
-
+		glActiveTexture(GL_TEXTURE0 + 2);
 		glGenTextures(1, &_texture);
 
 		glBindTexture(GL_TEXTURE_2D, _texture);
 		glTexStorage2D(GL_TEXTURE_2D, 8, GL_RGBA32F, 256, 256);
 		float* data = new float[256*256*4];
 		GenerateTexture(data, 256, 256);
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 256, 256, GL_RGBA, GL_FLOAT, data);
 		//glBindSampler(1, _texture);
 		//glActiveTexture(_texture);
 		//glActiveTexture(GL_TEXTURE0 + 0);
-		//glUniform1i(glGetUniformLocation(_renderingProgram, "s"), _texture);
+		glUniform1i(1, 2);
 
 		delete[] data;
 	}
