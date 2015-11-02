@@ -38,12 +38,12 @@ public:
 		glBindBuffer(GL_ARRAY_BUFFER, _uvBuffer);
 		GLfloat uv[] = 
 		{
-			0.0f, 1.0f,
+			0.0f, 2.0f,
 			0.0f, 0.0f,
-			1.0f, 0.0f,
-			0.0f, 1.0f,
-			1.0f, 0.0f,
-			1.0f, 1.0f
+			2.0f, 0.0f,
+			0.0f, 2.0f,
+			2.0f, 0.0f,
+			2.0f, 2.0f
 		};
 		glBufferData(GL_ARRAY_BUFFER, sizeof(uv), uv, GL_STATIC_DRAW);
 //		glVertexAttribPointer(4, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
@@ -64,10 +64,14 @@ public:
 //		float* data = new float[256*256*4];
 //		GenerateTexture(data, 256, 256);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 		glActiveTexture(GL_TEXTURE0 + texureUnit2);
 		glGenTextures(1, &_texture2);
 		sb6::ktx::file::load("media/textures/mossygrass.ktx", _texture2);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 //		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 256, 256, GL_RGBA, GL_FLOAT, data);
 		//glBindSampler(1, _texture);
 		//glActiveTexture(_texture);
