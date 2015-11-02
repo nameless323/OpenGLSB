@@ -34,6 +34,24 @@ public:
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
 		glEnableVertexAttribArray(0);
 
+		glGenBuffers(1, &_uvBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, _uvBuffer);
+		GLfloat uv[] = 
+		{
+			0.0f, 1.0f,
+			0.0f, 0.0f,
+			1.0f, 0.0f,
+			0.0f, 1.0f,
+			1.0f, 0.0f,
+			1.0f, 1.0f
+		};
+		glBufferData(GL_ARRAY_BUFFER, sizeof(uv), uv, GL_STATIC_DRAW);
+//		glVertexAttribPointer(4, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+		glBindVertexBuffer(1, _uvBuffer, 0, 2 * sizeof(GLfloat));
+		glVertexAttribFormat(4, 2, GL_FLOAT, GL_FALSE, 0);
+		glVertexAttribBinding(4, 1);
+		glEnableVertexAttribArray(4);
+
 		glUseProgram(_renderingProgram);
 
 		int texureUnit = 0;
@@ -69,7 +87,7 @@ public:
 	{
 		const GLfloat bckColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 		const GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-		glUniform1f(3, (sinf(currentTime) + 1)*0.5f);
+		glUniform1f(3, (sinf(currentTime) + 1.0f)*0.5f);
 		glClearBufferfv(GL_COLOR, 0, bckColor);
 		glClearBufferfv(GL_DEPTH, 0, white);
 		//glClear(GL_DEPTH_BUFFER_BIT);
@@ -84,12 +102,14 @@ public:
 		glDeleteProgram(_renderingProgram);
 
 		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(4);
 
 		glBindVertexArray(0);
 		glDeleteVertexArrays(1, &_vao);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glDeleteBuffers(1, &_vertsBuffer);
+		glDeleteBuffers(1, &_uvBuffer);
 		glDeleteTextures(1, &_texture);
 		glDeleteTextures(1, &_texture2);
 	}
@@ -114,7 +134,7 @@ private:
 	GLuint _renderingProgram;
 	GLuint _vao;
 	GLuint _vertsBuffer;
-	GLuint _colorBuffer;
+	GLuint _uvBuffer;
 	GLuint _texture;
 	GLuint _texture2;
 
