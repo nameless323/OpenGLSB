@@ -1,4 +1,5 @@
 #include <sb6.h>
+#include <sb6ktx.h>
 #include <cmath>
 #include <iostream>
 #include <sstream>
@@ -34,21 +35,29 @@ public:
 		glEnableVertexAttribArray(0);
 
 		glUseProgram(_renderingProgram);
-		glActiveTexture(GL_TEXTURE0 + 2);
-		glGenTextures(1, &_texture);
 
-		glBindTexture(GL_TEXTURE_2D, _texture);
-		glTexStorage2D(GL_TEXTURE_2D, 8, GL_RGBA32F, 256, 256);
-		float* data = new float[256*256*4];
-		GenerateTexture(data, 256, 256);
+		int texureUnit = 0;
+		int texureUnit2 = 1;
+		glActiveTexture(GL_TEXTURE0 + texureUnit);
+		glGenTextures(1, &_texture);
+		sb6::ktx::file::load("media/textures/tree.ktx", _texture);
+//		glBindTexture(GL_TEXTURE_2D, _texture);
+//		glTexStorage2D(GL_TEXTURE_2D, 8, GL_RGBA32F, 256, 256);
+//		float* data = new float[256*256*4];
+//		GenerateTexture(data, 256, 256);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 256, 256, GL_RGBA, GL_FLOAT, data);
+
+		glActiveTexture(GL_TEXTURE0 + texureUnit2);
+		glGenTextures(1, &_texture2);
+		sb6::ktx::file::load("media/textures/mossygrass.ktx", _texture2);
+//		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 256, 256, GL_RGBA, GL_FLOAT, data);
 		//glBindSampler(1, _texture);
 		//glActiveTexture(_texture);
 		//glActiveTexture(GL_TEXTURE0 + 0);
-		glUniform1i(1, 2);
+		glUniform1i(1, texureUnit);
+		glUniform1i(2, texureUnit2);
 
-		delete[] data;
+//		delete[] data;
 	}
 
 	void onResize(int w, int h)
@@ -60,6 +69,7 @@ public:
 	{
 		const GLfloat bckColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 		const GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+		glUniform1f(3, (sinf(currentTime) + 1)*0.5f);
 		glClearBufferfv(GL_COLOR, 0, bckColor);
 		glClearBufferfv(GL_DEPTH, 0, white);
 		//glClear(GL_DEPTH_BUFFER_BIT);
@@ -81,6 +91,7 @@ public:
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glDeleteBuffers(1, &_vertsBuffer);
 		glDeleteTextures(1, &_texture);
+		glDeleteTextures(1, &_texture2);
 	}
 
 	void GenerateTexture(float * data, int width, int height)
@@ -105,6 +116,7 @@ private:
 	GLuint _vertsBuffer;
 	GLuint _colorBuffer;
 	GLuint _texture;
+	GLuint _texture2;
 
 	vmath::mat4 projMatrix;
 	GLfloat mvLocation = 2;
