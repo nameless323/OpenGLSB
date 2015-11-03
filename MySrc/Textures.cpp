@@ -22,13 +22,13 @@ public:
 		glBindBuffer(GL_ARRAY_BUFFER, _vertsBuffer);
 		const GLfloat verts[] =
 		{
-			-0.5f, 0.5f, 0.5f, 1.0f,
-			-0.5f, -0.5f, 0.5f, 1.0f,
-			0.5f, -0.5f, 0.5f, 1.0f,
+			-1.0f, 1.0f, 1.0f, 1.0f,
+			-1.0f, -1.0f, 1.0f, 1.0f,
+			1.0f, -1.0f, 1.0f, 1.0f,
 
-			-0.5f, 0.5f, 0.5f, 1.0f,
-			0.5f, -0.5f, 0.5f, 1.0f,
-			0.5f, 0.5f, 0.5f, 1.0f
+			-1.0f, 1.0f, 1.0f, 1.0f,
+			1.0f, -1.0f, 1.0f, 1.0f,
+			1.0f, 1.0f, 1.0f, 1.0f
 		};
 		glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
@@ -38,12 +38,12 @@ public:
 		glBindBuffer(GL_ARRAY_BUFFER, _uvBuffer);
 		GLfloat uv[] = 
 		{
-			0.0f, 2.0f,
+			0.0f, 1.0f,
 			0.0f, 0.0f,
-			2.0f, 0.0f,
-			0.0f, 2.0f,
-			2.0f, 0.0f,
-			2.0f, 2.0f
+			1.0f, 0.0f,
+			0.0f, 1.0f,
+			1.0f, 0.0f,
+			1.0f, 1.0f
 		};
 		glBufferData(GL_ARRAY_BUFFER, sizeof(uv), uv, GL_STATIC_DRAW);
 //		glVertexAttribPointer(4, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
@@ -51,7 +51,7 @@ public:
 		glVertexAttribFormat(4, 2, GL_FLOAT, GL_FALSE, 0);
 		glVertexAttribBinding(4, 1);
 		glEnableVertexAttribArray(4);
-
+		
 		glUseProgram(_renderingProgram);
 
 		int texureUnit = 0;
@@ -63,13 +63,23 @@ public:
 //		glTexStorage2D(GL_TEXTURE_2D, 8, GL_RGBA32F, 256, 256);
 //		float* data = new float[256*256*4];
 //		GenerateTexture(data, 256, 256);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+//		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+//		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+//		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		glGenSamplers(1, &_sampler);
+
+		glSamplerParameteri(_sampler, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glSamplerParameteri(_sampler, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glSamplerParameteri(_sampler, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glSamplerParameteri(_sampler, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glSamplerParameterf(_sampler, GL_TEXTURE_MAX_ANISOTROPY_EXT, 16.0f);
+
+		glBindSampler(texureUnit, _sampler);
 
 		glActiveTexture(GL_TEXTURE0 + texureUnit2);
 		glGenTextures(1, &_texture2);
-		sb6::ktx::file::load("media/textures/mossygrass.ktx", _texture2);
+		sb6::ktx::file::load("media/textures/rightarrows.ktx", _texture2);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 //		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 256, 256, GL_RGBA, GL_FLOAT, data);
@@ -79,6 +89,7 @@ public:
 		glUniform1i(1, texureUnit);
 		glUniform1i(2, texureUnit2);
 
+		
 //		delete[] data;
 	}
 
@@ -116,6 +127,9 @@ public:
 		glDeleteBuffers(1, &_uvBuffer);
 		glDeleteTextures(1, &_texture);
 		glDeleteTextures(1, &_texture2);
+
+		glBindSampler(GL_TEXTURE0, 0);
+		glDeleteSamplers(1, &_sampler);
 	}
 
 	void GenerateTexture(float * data, int width, int height)
@@ -141,6 +155,7 @@ private:
 	GLuint _uvBuffer;
 	GLuint _texture;
 	GLuint _texture2;
+	GLuint _sampler;
 
 	vmath::mat4 projMatrix;
 	GLfloat mvLocation = 2;
