@@ -1,6 +1,6 @@
 #version 430 core
-layout(location = 1) uniform sampler2D s;
-layout(location = 2) uniform sampler2D s2;
+layout(binding = 0, location = 1) uniform sampler2D s;
+layout(binding = 1, location = 2) uniform sampler2D s2;
 layout(location = 3) uniform float t;
 
 in vec2 uv;

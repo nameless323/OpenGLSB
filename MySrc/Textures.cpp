@@ -86,8 +86,8 @@ public:
 		//glBindSampler(1, _texture);
 		//glActiveTexture(_texture);
 		//glActiveTexture(GL_TEXTURE0 + 0);
-		glUniform1i(1, texureUnit);
-		glUniform1i(2, texureUnit2);
+//		glUniform1i(1, texureUnit);
+//		glUniform1i(2, texureUnit2);
 
 		
 //		delete[] data;
