@@ -40,10 +40,10 @@ public:
 		{
 			0.0f, 1.0f,
 			0.0f, 0.0f,
-			1.0f, 0.0f,
+			2.0f, 0.0f,
 			0.0f, 1.0f,
-			1.0f, 0.0f,
-			1.0f, 1.0f
+			2.0f, 0.0f,
+			2.0f, 1.0f
 		};
 		glBufferData(GL_ARRAY_BUFFER, sizeof(uv), uv, GL_STATIC_DRAW);
 //		glVertexAttribPointer(4, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
@@ -73,8 +73,9 @@ public:
 //		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 		glGenSamplers(1, &_sampler);
-
-		glSamplerParameteri(_sampler, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		const GLfloat border[] = {1.0f, 0.0f, 0.0f, 1.0f};
+		glSamplerParameterfv(_sampler, GL_TEXTURE_BORDER_COLOR, border);
+		glSamplerParameteri(_sampler, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 		glSamplerParameteri(_sampler, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glSamplerParameteri(_sampler, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glSamplerParameteri(_sampler, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -107,6 +108,8 @@ public:
 
 	void render(double currentTime)
 	{
+
+		glViewport(0, 0, info.windowWidth, info.windowHeight);
 		const GLfloat bckColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 		const GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		glUniform1f(3, (sinf(currentTime) + 1.0f)*0.5f);
