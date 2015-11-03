@@ -59,6 +59,11 @@ public:
 		glActiveTexture(GL_TEXTURE0 + texureUnit);
 		glGenTextures(1, &_texture);
 		sb6::ktx::file::load("media/textures/tree.ktx", _texture);
+		glGenerateMipmap(GL_TEXTURE_2D);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 4);
+
+
 //		glBindTexture(GL_TEXTURE_2D, _texture);
 //		glTexStorage2D(GL_TEXTURE_2D, 8, GL_RGBA32F, 256, 256);
 //		float* data = new float[256*256*4];
@@ -74,6 +79,8 @@ public:
 		glSamplerParameteri(_sampler, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glSamplerParameteri(_sampler, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 		glSamplerParameterf(_sampler, GL_TEXTURE_MAX_ANISOTROPY_EXT, 16.0f);
+
+
 
 		glBindSampler(texureUnit, _sampler);
 
