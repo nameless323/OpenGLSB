@@ -40,10 +40,10 @@ public:
 		{
 			0.0f, 1.0f,
 			0.0f, 0.0f,
-			2.0f, 0.0f,
+			1.0f, 0.0f,
 			0.0f, 1.0f,
-			2.0f, 0.0f,
-			2.0f, 1.0f
+			1.0f, 0.0f,
+			1.0f, 1.0f
 		};
 		glBufferData(GL_ARRAY_BUFFER, sizeof(uv), uv, GL_STATIC_DRAW);
 //		glVertexAttribPointer(4, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
@@ -173,4 +173,4 @@ private:
 	
 };
 
-DECLARE_MAIN(Textures);
+//DECLARE_MAIN(Textures);
