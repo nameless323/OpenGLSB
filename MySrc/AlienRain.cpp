@@ -32,8 +32,8 @@ public:
 		glGenVertexArrays(1, &_vao);
 		glBindVertexArray(_vao);
 
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LEQUAL);
+//		glEnable(GL_DEPTH_TEST);
+//		glDepthFunc(GL_LEQUAL);
 
 		_alienTex = sb6::ktx::file::load("media/textures/aliens.ktx");
 		GLuint textureUnit = 0;
@@ -42,7 +42,7 @@ public:
 		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
 		glGenBuffers(1, &_rainBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, _rainBuffer);
+		glBindBufferBase(GL_UNIFORM_BUFFER, 0, _rainBuffer);
 		glBufferData(GL_UNIFORM_BUFFER, 256 * sizeof(vmath::vec4), NULL, GL_DYNAMIC_DRAW);
 
 		for (int i = 0; i < 256; i++)
@@ -64,17 +64,30 @@ public:
 
 	void render(double currentTime)
 	{
-
+		static const GLfloat black[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 		glViewport(0, 0, info.windowWidth, info.windowHeight);
-		const GLfloat bckColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-		const GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-		glClearBufferfv(GL_COLOR, 0, bckColor);
-		glClearBufferfv(GL_DEPTH, 0, white);
-		//glClear(GL_DEPTH_BUFFER_BIT);
+		float t = static_cast<float>(currentTime);
+
+		glClearBufferfv(GL_COLOR, 0, black);
 		glUseProgram(_renderingProgram);
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		//glBindBufferBase(GL_UNIFORM_BUFFER, 0, _rainBuffer);
+		vmath::vec4* droplet = (vmath::vec4*)glMapBufferRange(GL_UNIFORM_BUFFER, 0, 256 * sizeof(vmath::vec4), GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT);
 
+		for (int i = 0; i < 256; i++)
+		{
+			droplet[i][0] = dropletXOffset[i];
+			droplet[i][1] = 2.0f - fmodf((t + float(i)) * dropletFallSpeed[i], 4.31f);
+			droplet[i][2] = t * dropletRotSpeed[i];
+			droplet[i][3] = 0.0f;
+		}
+		glUnmapBuffer(GL_UNIFORM_BUFFER);
 
+		int alienIndex;
+		for (alienIndex = 0; alienIndex < 256; alienIndex++)
+		{
+			glVertexAttribI1i(0, alienIndex);
+			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+		}
 	}
 
 	void shutdown()

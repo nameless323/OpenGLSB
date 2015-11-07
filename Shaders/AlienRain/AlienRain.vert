@@ -31,6 +31,7 @@ void main(void)
 		vec2(0.5, 0.5)
 	);
 	vsOut.tc = position[gl_VertexID].xy + vec2(0.5);
+	vsOut.alien = alienIndex % 64;
 	float co = cos(droplet[alienIndex].orientation);
 	float so = sin(droplet[alienIndex].orientation);
 	mat2 rot = mat2(vec2(co, so), vec2(-so, co));
