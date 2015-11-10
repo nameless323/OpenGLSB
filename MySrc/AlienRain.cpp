@@ -139,4 +139,4 @@ private:
 
 };
 
-DECLARE_MAIN(AlienRain);
+//DECLARE_MAIN(AlienRain);
