@@ -30,6 +30,25 @@ public:
 		glCompileShader(vert);
 		delete[] data;
 
+		GLint status;
+		glGetShaderiv(vert, GL_COMPILE_STATUS, &status);
+
+		if (status == GL_FALSE)
+		{
+			OutputDebugStringA("---------------\n");
+			OutputDebugStringA("Vertex Shader Error:\n");
+			GLint len;
+			glGetShaderiv(vert, GL_INFO_LOG_LENGTH, &len);
+			char* log = new char[len + 1];
+
+			GLsizei byteWritten;
+			glGetShaderInfoLog(vert, len, &byteWritten, log);
+			log[len] = '\0';
+			OutputDebugStringA(log);
+			OutputDebugStringA("---------------\n");
+			delete[] log;
+		}
+
 		GLuint frag = glCreateShader(GL_FRAGMENT_SHADER);
 		fp = fopen("Shaders/ShaderInfo/ShaderF.frag", "rb");
 		fseek(fp, 0, SEEK_END);
@@ -45,11 +64,47 @@ public:
 		glCompileShader(frag);
 		delete[] data;
 
+		glGetShaderiv(frag, GL_COMPILE_STATUS, &status);
+
+		if (status == GL_FALSE)
+		{
+			OutputDebugStringA("---------------\n");
+			OutputDebugStringA("Fragment Shader Error:\n");
+			GLint len;
+			glGetShaderiv(frag, GL_INFO_LOG_LENGTH, &len);
+			char* log = new char[len + 1];
+
+			GLsizei byteWritten;
+			glGetShaderInfoLog(frag, len, &byteWritten, log);
+			log[len] = '\0';
+			OutputDebugStringA(log);
+			OutputDebugStringA("---------------\n");
+			delete[] log;
+		}
+
 		_renderingProgram = glCreateProgram();
 		glAttachShader(_renderingProgram, vert);
 		glAttachShader(_renderingProgram, frag);
 		glLinkProgram(_renderingProgram);
+		
+		glGetProgramiv(_renderingProgram, GL_LINK_STATUS, &status);
+		if (status == GL_FALSE)
+		{
+			GLint len;
+			glGetProgramiv(_renderingProgram, GL_INFO_LOG_LENGTH, &len);
+			char* log = new char[len + 1];
+			GLsizei bytesWritten;
+			glGetProgramInfoLog(_renderingProgram, len, &bytesWritten, log);
+			log[len] = '\0';
+
+			OutputDebugStringA("-------------------\nShader program linking error:\n");
+			OutputDebugStringA(log);
+			OutputDebugStringA("--------------\n");
+			delete[] log;
+		}
 		glDeleteShader(vert);
+		glDeleteShader(frag);
+
 
 		glGenVertexArrays(1, &_vao);
 		glBindVertexArray(_vao);
