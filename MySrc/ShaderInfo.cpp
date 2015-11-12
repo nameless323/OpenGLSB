@@ -171,5 +171,5 @@ private:
 
 };
 
-DECLARE_MAIN(ShaderInfo);
+//DECLARE_MAIN(ShaderInfo);
 
