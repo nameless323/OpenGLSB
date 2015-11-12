@@ -208,5 +208,5 @@ private:
 
 };
 
-DECLARE_MAIN(SeparateShaderPipeline);
+//DECLARE_MAIN(SeparateShaderPipeline);
 
