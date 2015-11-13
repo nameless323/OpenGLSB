@@ -177,8 +177,8 @@ public:
     virtual void init()
     {
         strcpy(info.title, "SuperBible6 Example");
-        info.windowWidth = 800;
-        info.windowHeight = 600;
+        info.windowWidth = 1024;
+        info.windowHeight = 768;
 #ifdef __APPLE__
         info.majorVersion = 3;
         info.minorVersion = 2;
