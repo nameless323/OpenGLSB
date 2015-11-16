@@ -11,7 +11,7 @@ class Dummy : public sb6::application
 public:
 	void startup()
 	{
-		_renderingProgram = GetShaderProgram("Shaders/SeparateShaderPipeline/ShaderV.vert", "Shaders/SeparateShaderPipeline/ShaderFBlue.frag");
+		_renderingProgram = GetShaderProgram("Shaders/Common/Default.vert", "Shaders/Common/Default.frag");
 		glGenVertexArrays(1, &_vao);
 		glBindVertexArray(_vao);
 
@@ -19,14 +19,14 @@ public:
 		glDepthFunc(GL_LEQUAL);
 		glGenBuffers(1, &_vertsBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, _vertsBuffer);
-		const GLfloat verts1[] =
+		const GLfloat verts[] =
 		{
 			-0.5f, -0.5f, 0.5f, 1.0f,
 			-0.5f, 0.5f, 0.5f, 1.0f,
 			0.5f, 0.5f, 0.5f, 1.0f,
 			0.5f, -0.5f, 0.5f, 1.0f
 		};
-		glBufferData(GL_ARRAY_BUFFER, sizeof(verts1), verts1, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
 		glEnableVertexAttribArray(0);
 
