@@ -108,5 +108,5 @@ private:
 
 };
 
-DECLARE_MAIN(PrimitiveRestart);
+//DECLARE_MAIN(PrimitiveRestart);
 
