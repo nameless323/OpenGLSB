@@ -95,4 +95,4 @@ private:
 	} uniforms;
 };
 
-DECLARE_MAIN(GrassInstancing);
+//DECLARE_MAIN(GrassInstancing);

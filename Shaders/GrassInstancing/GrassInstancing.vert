@@ -49,7 +49,7 @@ mat4 construct_rotation_matrix(float angle)
 		vec4(c, 0.0, s, 0.0),
 		vec4(0.0, 1.0, 0.0, 0.0),
 		vec4(-s, 0.0, c, 0.0),
-		vec4(0.0, 0.0, 0.0, 1.0),
+		vec4(0.0, 0.0, 0.0, 1.0)
 	);
 }
 
