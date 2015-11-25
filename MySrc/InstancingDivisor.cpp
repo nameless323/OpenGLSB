@@ -119,5 +119,5 @@ private:
 
 };
 
-DECLARE_MAIN(InstancingDivisor);
+//DECLARE_MAIN(InstancingDivisor);
 
