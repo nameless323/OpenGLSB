@@ -21,14 +21,42 @@ public:
 		glBindBuffer(GL_ARRAY_BUFFER, _vertsBuffer);
 		const GLfloat verts[] =
 		{
-			-0.5f, -0.5f, 0.5f,
-			-0.5f, 0.5f, 0.5f,
-			0.5f, 0.5f, 0.5f,
-			0.5f, -0.5f, 0.5f
+			-0.5f, -0.5f, 0.5f, 1.0f,
+			-0.5f, 0.5f, 0.5f, 1.0f,
+			0.5f, 0.5f, 0.5f, 1.0f,
+			0.5f, -0.5f, 0.5f, 1.0f
 		};
-		glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+		const GLfloat instancedColors[] =
+		{
+			1.0f, 0.0f, 0.0f, 1.0f,
+			0.0f, 1.0f, 0.0f, 1.0f,
+			0.0f, 0.0f, 1.0f, 1.0f,
+			1.0f, 1.0f, 0.0f, 1.0f
+		};
+		const GLfloat instancedOffsets[] =
+		{
+			-2.0f, 2.0f, 0.0f, 0.0f,
+			-2.0f, -2.0f, 0.0f, 0.0f,
+			2.0f, 2.0f, 0.0f, 0.0f,
+			2.0f, -2.0f, 0.0f, 0.0f
+		};
+
+		glBufferData(GL_ARRAY_BUFFER, sizeof(verts) + sizeof(instancedColors) + sizeof(instancedOffsets), nullptr, GL_STATIC_DRAW);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(verts), verts);
+		glBufferSubData(GL_ARRAY_BUFFER, sizeof(verts), sizeof(instancedColors), instancedColors);
+		glBufferSubData(GL_ARRAY_BUFFER, sizeof(verts) + sizeof(instancedColors), sizeof(instancedOffsets), instancedOffsets);
+
+		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
 		glEnableVertexAttribArray(0);
+
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, (GLvoid*)sizeof(verts));
+		glEnableVertexAttribArray(1);
+
+		glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 0, (GLvoid*)(sizeof(verts) + sizeof(instancedColors)));
+		glEnableVertexAttribArray(2);
+
+		glVertexAttribDivisor(1, 1);
+		glVertexAttribDivisor(2, 1);
 
 		const GLubyte indices[] =
 		{
@@ -40,6 +68,8 @@ public:
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 		glUseProgram(_renderingProgram);
+		_mvpLocation = glGetUniformLocation(_renderingProgram, "mvp");
+		glBindVertexArray(0);
 	}
 
 	void onResize(int w, int h)
@@ -49,13 +79,18 @@ public:
 
 	void render(double currentTime)
 	{
-
+		glBindVertexArray(_vao);
 		const GLfloat bckColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 		const GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		glClearBufferfv(GL_COLOR, 0, bckColor);
 		glClearBufferfv(GL_DEPTH, 0, white);
+
+		vmath::mat4 mvp = vmath::perspective(35.0f, (float)info.windowWidth / (float)info.windowHeight, 0.1f, 1000.0) 
+			* vmath::lookat(vmath::vec3(0.0, 0.0f, -5.0f), vmath::vec3(0.0, 0.0f, 0.0f), vmath::vec3(0.0, 1.0f, 0.0f))
+			* vmath::translate(0.0f, 0.0f, 5.0f);
+		glUniformMatrix4fv(3, 1, GL_FALSE, mvp);
 		//		glClear(GL_DEPTH_BUFFER_BIT);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, nullptr);
+		glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, nullptr, 4);
 	}
 
 	void shutdown()
@@ -77,7 +112,7 @@ private:
 	GLuint _vao;
 	GLuint _vertsBuffer;
 	GLuint _elementsBuffer;
-
+	GLuint _mvpLocation;
 	vmath::mat4 projMatrix;
 	GLfloat mvLocation = 2;
 	GLfloat projLocation = 3;

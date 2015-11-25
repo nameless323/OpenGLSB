@@ -5,5 +5,5 @@ out vec4 col;
 
 void main(void)
 {
-	return col;
+	col = vCol;
 }
