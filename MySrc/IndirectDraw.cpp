@@ -16,10 +16,11 @@ enum
 
 struct DrawArraysIndirectCommand
 {
-	GLuint Count;
-	GLuint PrimCount;
-	GLuint First;
-	GLuint BaseInstance;
+	GLuint Count; //how many vertices overall
+	GLuint PrimCount; //how many instanced primitives
+	GLuint First; //where the first vertex start in vertex buffer
+	GLuint BaseInstance; //offset from global buffer where instance attibl lies
+	//https://www.reddit.com/r/opengl/comments/3m9u36/how_to_render_using_glmultidrawarraysindirect/
 };
 
 class IndirectDraw : public sb6::application
@@ -205,5 +206,5 @@ private:
 
 };
 
-DECLARE_MAIN(IndirectDraw);
+//DECLARE_MAIN(IndirectDraw);
 
