@@ -17,29 +17,55 @@ public:
 
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
-		glGenBuffers(1, &_vertsBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, _vertsBuffer);
 		const GLfloat verts[] =
 		{
-			-0.5f, -0.5f, 0.5f,
-			-0.5f, 0.5f, 0.5f,
-			0.5f, 0.5f, 0.5f,
-			0.5f, -0.5f, 0.5f
-		};
-		glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-		glEnableVertexAttribArray(0);
+			-0.2f, -0.2, 0.5f, //triangle
+			-0.2f, 0.2f, 0.5f,
+			0.2f, -0.2f, 0.5f,
 
-		const GLubyte indices[] =
+			-1.0f, -1.0f, 0.5f, //fullscreen quad
+			-1.0f, 1.0f, 0.5f,
+			1.0f, -1.0f, 0.5f,
+			1.0f, -1.0f, 0.5f,
+			-1.0f, 1.0f, 0.5f,
+			1.0f, 1.0f, 0.5f
+		};
+
+		float angle = vmath::radians(180.0f);
+		float c = sinf(angle);
+		float s = sinf(angle);
+		const GLfloat mats[] =
 		{
-			0, 1, 2,
-			0, 2, 3
-		};
-		glGenBuffers(1, &_elementsBuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementsBuffer);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+			1.0f, 0.0f, 0.0f, 0.0f, //trig 1
+			0.0f, 1.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f,
+			-0.2f, -0.2f, 0.0f, 1.0f,
 
-		glUseProgram(_renderingProgram);
+			c, s, 0.0f, 0.0f, //trig 2
+			-s, c, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f,
+			0.2f, 0.2f, 0.0f, 1.0f,
+
+			0.1f, 0.0f, 0.0f, 0.0f, //cube 1
+			0.0f, 0.1f, 0.0f, 0.0f,
+			0.0f, 0.0f, 0.1f, 0.0f,
+			-0.8f, -0.8f, 0.0f, 1.0f,
+
+			0.1f, 0.0f, 0.0f, 0.0f, //cube 2
+			0.0f, 0.1f, 0.0f, 0.0f,
+			0.0f, 0.0f, 0.1f, 0.0f,
+			-0.8f, 0.8f, 0.0f, 1.0f,
+
+			0.1f, 0.0f, 0.0f, 0.0f, //cube 3
+			0.0f, 0.1f, 0.0f, 0.0f,
+			0.0f, 0.0f, 0.1f, 0.0f,
+			0.8f, 0.8f, 0.0f, 1.0f,
+
+			0.1f, 0.0f, 0.0f, 0.0f, //cube 4
+			0.0f, 0.1f, 0.0f, 0.0f,
+			0.0f, 0.0f, 0.1f, 0.0f,
+			0.8f, -0.8f, 0.0f, 1.0f
+		};
 	}
 
 	void onResize(int w, int h)
