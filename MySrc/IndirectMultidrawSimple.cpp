@@ -88,7 +88,7 @@ public:
 		glBindBuffer(GL_DRAW_INDIRECT_BUFFER, _buffers[0]);
 		glBufferData(GL_DRAW_INDIRECT_BUFFER, 2 * sizeof(DrawArraysIndirectCommand), nullptr, GL_STATIC_DRAW);
 
-		DrawArraysIndirectCommand* commandBuffer = (DrawArraysIndirectCommand*)glMapBufferRange(GL_DRAW_INDIRECT_BUFFER, 0, 2 * sizeof(commandBuffer), GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT); //todo maybe buffer range will be better
+		DrawArraysIndirectCommand* commandBuffer = (DrawArraysIndirectCommand*)glMapBufferRange(GL_DRAW_INDIRECT_BUFFER, 0, 2 * sizeof(DrawArraysIndirectCommand), GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT); //todo maybe buffer range will be better
 		commandBuffer[0].VertsCount = 3;
 		commandBuffer[0].PrimitivesCount = 2;
 		commandBuffer[0].FirstVertex = 0;
