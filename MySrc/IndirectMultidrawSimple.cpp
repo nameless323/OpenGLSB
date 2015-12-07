@@ -44,9 +44,10 @@ public:
 			2, 1, 3
 		};
 
-		float angle = 180.0f;
-		float c = sinf(angle);
+		float angle = vmath::radians(180.0f);
+		float c = cosf(angle);
 		float s = sinf(angle);
+
 		const GLfloat mats[] =
 		{
 			1.0f, 0.0f, 0.0f, 0.0f, //trig 1
@@ -54,8 +55,8 @@ public:
 			0.0f, 0.0f, 1.0f, 0.0f,
 			-0.2f, -0.2f, 0.0f, 1.0f,
 
-			1.0f, 0.0f , 0.0f, 0.0f, //trig 2
-			0.0f, 1.0f, 0.0f, 0.0f,
+			c, s , 0.0f, 0.0f, //trig 2
+			-s, c, 0.0f, 0.0f,
 			0.0f, 0.0f, 1.0f, 0.0f,
 			0.2f, 0.2f, 0.0f, 1.0f,
 
@@ -94,7 +95,7 @@ public:
 		glBindBuffer(GL_DRAW_INDIRECT_BUFFER, _buffers[0]);
 		glBufferData(GL_DRAW_INDIRECT_BUFFER, 2 * sizeof(DrawArraysIndirectCommand), nullptr, GL_STATIC_DRAW);
 
-		DrawArraysIndirectCommand* commandBuffer = (DrawArraysIndirectCommand*)glMapBufferRange(GL_DRAW_INDIRECT_BUFFER, 0, 2 * sizeof(DrawArraysIndirectCommand), GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT); //todo maybe buffer range will be better
+		DrawArraysIndirectCommand* commandBuffer = (DrawArraysIndirectCommand*)glMapBufferRange(GL_DRAW_INDIRECT_BUFFER, 0, 2 * sizeof(DrawArraysIndirectCommand), GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT);
 		commandBuffer[0].VertsCount = 3;
 		commandBuffer[0].PrimitivesCount = 2;
 		commandBuffer[0].FirstVertex = 0;
