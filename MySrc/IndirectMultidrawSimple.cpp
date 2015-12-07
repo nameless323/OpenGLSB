@@ -14,6 +14,7 @@ public:
 		GLuint VertsCount;
 		GLuint PrimitivesCount;
 		GLuint FirstVertex;
+		GLuint BaseVertex;
 		GLuint BaseInstance;
 	};
 	void startup()
@@ -33,9 +34,14 @@ public:
 			-1.0f, -1.0f, 0.5f, //fullscreen quad
 			-1.0f, 1.0f, 0.5f,
 			1.0f, -1.0f, 0.5f,
-			1.0f, -1.0f, 0.5f,
-			-1.0f, 1.0f, 0.5f,
 			1.0f, 1.0f, 0.5f
+		};
+		const GLuint elems[] =
+		{
+			0, 1, 2,
+
+			0, 1, 2,
+			2, 1, 3
 		};
 
 		float angle = 180.0f;
@@ -84,7 +90,7 @@ public:
 			1.0f, 1.0f, 1.0f
 		};
 
-		glGenBuffers(4, _buffers);
+		glGenBuffers(5, _buffers);
 		glBindBuffer(GL_DRAW_INDIRECT_BUFFER, _buffers[0]);
 		glBufferData(GL_DRAW_INDIRECT_BUFFER, 2 * sizeof(DrawArraysIndirectCommand), nullptr, GL_STATIC_DRAW);
 
@@ -92,11 +98,13 @@ public:
 		commandBuffer[0].VertsCount = 3;
 		commandBuffer[0].PrimitivesCount = 2;
 		commandBuffer[0].FirstVertex = 0;
+		commandBuffer[0].BaseVertex = 0;
 		commandBuffer[0].BaseInstance = 0;
 
 		commandBuffer[1].VertsCount = 6;
 		commandBuffer[1].PrimitivesCount = 4;
 		commandBuffer[1].FirstVertex = 3;
+		commandBuffer[1].BaseVertex = 3;
 		commandBuffer[1].BaseInstance = 2;
 
 		glUnmapBuffer(GL_DRAW_INDIRECT_BUFFER);
@@ -133,6 +141,8 @@ public:
 		glEnableVertexAttribArray(2);
 		glVertexAttribDivisor(2, 1);
 		
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffers[4]);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elems), elems, GL_STATIC_DRAW);
 	}
 
 	void onResize(int w, int h)
@@ -149,7 +159,8 @@ public:
 		glClearBufferfv(GL_COLOR, 0, bckColor);
 		glClearBufferfv(GL_DEPTH, 0, white);
 		//		glClear(GL_DEPTH_BUFFER_BIT);
-		glMultiDrawArraysIndirect(GL_TRIANGLES, nullptr, 2, 0);
+		glMultiDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, nullptr, 2, 0);
+		//glMultiDrawArraysIndirect(GL_TRIANGLES, nullptr, 2, 0);
 		glBindVertexArray(0);
 	}
 
