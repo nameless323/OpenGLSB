@@ -170,12 +170,17 @@ public:
 		glDeleteProgram(_renderingProgram);
 
 		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(2);
+		glDisableVertexAttribArray(_modelLocation);
+		glDisableVertexAttribArray(_modelLocation + 1);
+		glDisableVertexAttribArray(_modelLocation + 2);
+		glDisableVertexAttribArray(_modelLocation + 3);
 
 		glBindVertexArray(0);
 		glDeleteVertexArrays(1, &_vao);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glDeleteBuffers(3, _buffers);
+		glDeleteBuffers(5, _buffers);
 	}
 
 private:
