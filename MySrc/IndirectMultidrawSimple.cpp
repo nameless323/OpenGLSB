@@ -191,5 +191,5 @@ private:
 
 };
 
-DECLARE_MAIN(IndirectMultidrawSimple);
+//DECLARE_MAIN(IndirectMultidrawSimple);
 
