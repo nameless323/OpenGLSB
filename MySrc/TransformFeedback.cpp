@@ -181,7 +181,7 @@ public:
 		for (i = _iterationPerFrame; i != 0; --i)
 		{
 			glBindVertexArray(_vao[_iterationIndex & 1]);
-			glBindTexture(GL_TEXTURE_BUFFER, _posTbo[_iterationIndex & i]);
+			glBindTexture(GL_TEXTURE_BUFFER, _posTbo[_iterationIndex & 1]);
 			_iterationIndex++;
 			glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, _vbo[PositionA + (_iterationIndex & 1)]);
 			glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 1, _vbo[VelocityA + (_iterationIndex & 1)]);
