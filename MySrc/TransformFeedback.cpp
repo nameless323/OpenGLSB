@@ -36,7 +36,35 @@ public:
 		GLuint fs;
 		char buffer[1024];
 
-		vs = sb6::shader::load("Shaders/TransformFeedback/FeedbackUpdate.vert");
+		vs = sb6::shader::load("Shaders/TransformFeedback/FeedbackUpdate.vert", GL_VERTEX_SHADER);
+		if (_updateProgram)
+			glDeleteProgram(_updateProgram);
+		_updateProgram = glCreateProgram();
+		glAttachShader(_updateProgram, vs);
+
+		static const char* varyings[] =
+		{
+			"tf_position_mass",
+			"tf_velocity"
+		};
+		glTransformFeedbackVaryings(_updateProgram, 2, varyings, GL_SEPARATE_ATTRIBS);
+
+		glLinkProgram(_updateProgram);
+
+		glGetShaderInfoLog(vs, 1024, nullptr, buffer);
+		glGetProgramInfoLog(_updateProgram, 1024, nullptr, buffer);
+		glDeleteShader(vs);
+
+		vs = sb6::shader::load("Shaders/TransformFeedback/FeedbackRender.vert", GL_VERTEX_SHADER);
+		fs = sb6::shader::load("Shaders/TransformFeedback/FeedbackRender.frag", GL_FRAGMENT_SHADER);
+
+		if (_renderProgram)
+			glDeleteProgram(_renderProgram);
+		_renderProgram = glCreateProgram();
+		glAttachShader(_renderProgram, vs);
+		glAttachShader(_renderProgram, fs);
+
+		glLinkProgram(_renderProgram);
 	}
 
 	void startup() override
@@ -78,7 +106,7 @@ public:
 			}
 		}
 		glGenVertexArrays(2, _vao);
-		glGenBuffers(5, _vao);
+		glGenBuffers(5, _vbo);
 
 		for (i = 0; i < 2; i++)
 		{
@@ -107,7 +135,7 @@ public:
 		glGenTextures(2, _posTbo);
 		glBindTexture(GL_TEXTURE_BUFFER, _posTbo[0]);
 		glTexBuffer(GL_TEXTURE_BUFFER, GL_RGBA32F, _vbo[PositionA]);
-		glBindTexture(GL_TEXTURE, _posTbo[1]);
+		glBindTexture(GL_TEXTURE_BUFFER, _posTbo[1]);
 		glTexBuffer(GL_TEXTURE_BUFFER, GL_RGBA32F, _vbo[PositionB]);
 
 		int lines = (PointsX - 1) * PointsY + (PointsY - 1) * PointsX;
