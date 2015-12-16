@@ -241,5 +241,5 @@ private:
 	int _iterationPerFrame;
 };
 
-DECLARE_MAIN(TransformFeedback);
+//DECLARE_MAIN(TransformFeedback);
 

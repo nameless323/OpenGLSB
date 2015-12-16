@@ -15,7 +15,7 @@ using vmath::mat4;
 class TransformFeedbackParticles : public sb6::application
 {
 public:
-	TransformFeedbackParticles() : _eye(3, 3, 3), _prevTime(0), _angle(0), _rot(0.0f, 0.0f, 0.0f), _mouseOldX(0), _mouseOldY(0)
+	TransformFeedbackParticles() : _eye(3, 3, 3), _prevTime(0), _angle(0), _rot(0.0f, 0.0f, 0.0f), _mouseOldX(0), _mouseOldY(0), _ind(0)
 	{}
 
 	void LoadShaders()
@@ -39,6 +39,7 @@ public:
 
 	void startup() override
 	{
+		glPointSize(3.0f);
 		std::default_random_engine generator;
 		std::uniform_real_distribution<float> distribution(-0.1f, 0.1f);
 		for (int i = 0; i < NUM_PARTICLES; i++)
@@ -79,26 +80,37 @@ public:
 	void onResize(int w, int h) override
 	{
 		application::onResize(w, h);
-		glViewport(0, 0, w, h);
-		_projMatrix = vmath::perspective(60.0f, (float)w / (float)h, 0.5f, 20.0f) * vmath::lookat(_eye, vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(_projLocation, 1, GL_FALSE, _projMatrix);
+		
 	}
 
 	void render(double currentTime) override
 	{
-
+//		_projMatrix = vmath::perspective(60.0f, (float)w / (float)h, 0.5f, 20.0f) * vmath::lookat(_eye, vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
+//		glUniformMatrix4fv(_projLocation, 1, GL_FALSE, _projMatrix);
+//		glViewport(0, 0, info.windowWidth, info.windowHeight);
 		const GLfloat bckColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 		const GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		glClearBufferfv(GL_COLOR, 0, bckColor);
 		glClearBufferfv(GL_DEPTH, 0, white);
 
-		_mv = vmath::rotate(vmath::radians(_rot[2]), vec3(0.0f, 0.0f, 1.0f)) *
-			vmath::rotate(vmath::radians(_rot[0]), vec3(1.0f, 0.0f, 0.0f)) *
-			vmath::rotate(vmath::radians(_rot[1]), vec3(0.0f, 1.0f, 0.0f));
+		_mv = rotate(vmath::radians(_rot[2]), vec3(0.0f, 0.0f, 1.0f)) *
+			rotate(vmath::radians(_rot[0]), vec3(1.0f, 0.0f, 0.0f)) *
+			rotate(vmath::radians(_rot[1]), vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(_mvLocation, 1, GL_FALSE, _mv);
-		glUniform1f(_dtLocation, currentTime - _prevTime);
+
+		glUniform1f(_dtLocation, 0.025f);
+
+		glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, _vertBuffer[_ind ^ 1]);
+		glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 1, _velBuffer[_ind ^ 1]);
+
+		glBeginTransformFeedback(GL_POINTS);
+		glBindVertexArray(_vao[_ind]);
+		glDrawArrays(GL_POINTS, 0, NUM_PARTICLES);
+		glEndTransformFeedback();
+		//glBindVertexArray(0);
 
 		_prevTime = currentTime;
+		_ind ^= 1;
 	}
 
 	void shutdown() override
@@ -140,10 +152,11 @@ private:
 	vec3 _vel[NUM_PARTICLES];
 	vec3 _eye;
 	vec3 _rot;
-	float _prevTime;
+	double _prevTime;
 	int _mouseOldX;
 	int _mouseOldY;
 	float _angle;
+	int _ind;
 	mat4 _projMatrix;
 	mat4 _mv;
 	GLint _projLocation;
@@ -152,5 +165,5 @@ private:
 	GLint _dtLocation;
 };
 
-//DECLARE_MAIN(Dummy);
+DECLARE_MAIN(TransformFeedbackParticles);
 
