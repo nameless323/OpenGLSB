@@ -10,7 +10,7 @@
 using vmath::vec3;
 using vmath::mat4;
 
-#define NUM_PARTICLES 5000
+#define NUM_PARTICLES 50000
 
 class TransformFeedbackParticles : public sb6::application
 {
@@ -39,7 +39,7 @@ public:
 
 	void startup() override
 	{
-		glPointSize(3.0f);
+		glPointSize(1.0f);
 		std::default_random_engine generator;
 		std::uniform_real_distribution<float> distribution(-0.1f, 0.1f);
 		for (int i = 0; i < NUM_PARTICLES; i++)
@@ -51,20 +51,21 @@ public:
 		LoadShaders();
 
 		glGenVertexArrays(2, _vao);
-		glGenBuffers(2, _vertBuffer);
-		glGenBuffers(2, _velBuffer);
+		glGenBuffers(2, _vertexBuffer);
+		glGenBuffers(2, _velocityBuffer);
 
 		for (int i = 0; i < 2; i++)
 		{
-			glBindVertexArray(_vao[0]);
-			glBindBuffer(GL_ARRAY_BUFFER, _vertBuffer[i]);
+			glBindVertexArray(_vao[i]);
+			glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer[i]);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(vec3) * NUM_PARTICLES, _pos, GL_DYNAMIC_COPY);
 			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+			glEnableVertexAttribArray(0);
 
-			glBindBuffer(GL_ARRAY_BUFFER, _velBuffer[i]);
+			glBindBuffer(GL_ARRAY_BUFFER, _velocityBuffer[i]);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(vec3) * NUM_PARTICLES, _vel, GL_DYNAMIC_COPY);
 			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-			
+			glEnableVertexAttribArray(1);
 		}
 		glUseProgram(_shader);
 		_projLocation = glGetUniformLocation(_shader, "proj");
@@ -85,23 +86,21 @@ public:
 
 	void render(double currentTime) override
 	{
-//		_projMatrix = vmath::perspective(60.0f, (float)w / (float)h, 0.5f, 20.0f) * vmath::lookat(_eye, vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
-//		glUniformMatrix4fv(_projLocation, 1, GL_FALSE, _projMatrix);
-//		glViewport(0, 0, info.windowWidth, info.windowHeight);
 		const GLfloat bckColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 		const GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		glClearBufferfv(GL_COLOR, 0, bckColor);
 		glClearBufferfv(GL_DEPTH, 0, white);
 
+
 		_mv = rotate(vmath::radians(_rot[2]), vec3(0.0f, 0.0f, 1.0f)) *
 			rotate(vmath::radians(_rot[0]), vec3(1.0f, 0.0f, 0.0f)) *
 			rotate(vmath::radians(_rot[1]), vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(_mvLocation, 1, GL_FALSE, _mv);
+		double res = currentTime - _prevTime;
+		glUniform1f(_dtLocation, res);
 
-		glUniform1f(_dtLocation, 0.025f);
-
-		glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, _vertBuffer[_ind ^ 1]);
-		glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 1, _velBuffer[_ind ^ 1]);
+		glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, _vertexBuffer[_ind ^ 1]);
+		glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 1, _velocityBuffer[_ind ^ 1]);
 
 		glBeginTransformFeedback(GL_POINTS);
 		glBindVertexArray(_vao[_ind]);
@@ -118,8 +117,8 @@ public:
 		glBindVertexArray(0);
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
-		glDeleteBuffers(2, _vertBuffer);
-		glDeleteBuffers(2, _velBuffer);
+		glDeleteBuffers(2, _vertexBuffer);
+		glDeleteBuffers(2, _velocityBuffer);
 		glDeleteProgram(_shader);
 	}
 
@@ -145,8 +144,8 @@ public:
 
 private:
 	GLuint _vao[2];
-	GLuint _vertBuffer[2];
-	GLuint _velBuffer[2];
+	GLuint _vertexBuffer[2];
+	GLuint _velocityBuffer[2];
 	GLuint _shader;
 	vec3 _pos[NUM_PARTICLES];
 	vec3 _vel[NUM_PARTICLES];

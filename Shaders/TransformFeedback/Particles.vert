@@ -43,5 +43,5 @@ void main(void)
 	}
 
 	if (refl)
-	newVel *= damp;
+		newVel *= damp;
 }
