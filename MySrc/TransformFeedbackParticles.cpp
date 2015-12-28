@@ -164,5 +164,5 @@ private:
 	GLint _dtLocation;
 };
 
-DECLARE_MAIN(TransformFeedbackParticles);
+//DECLARE_MAIN(TransformFeedbackParticles);
 
