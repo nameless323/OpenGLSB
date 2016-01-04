@@ -95,5 +95,5 @@ private:
 	}
 };
 
-DECLARE_MAIN(CustomClipping);
+//DECLARE_MAIN(CustomClipping);
 
