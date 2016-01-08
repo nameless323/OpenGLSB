@@ -3,7 +3,7 @@
 #include <map>
 #include "sb6.h"
 
-std::map<std::string, GLuint> ShaderTypesMap
+static const std::map<std::string, GLuint> ShaderTypesMap
 {
 	{ ".vert", GL_VERTEX_SHADER },
 	{ ".frag", GL_FRAGMENT_SHADER },
