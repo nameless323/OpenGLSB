@@ -2,6 +2,7 @@
 #include <string>
 #include <map>
 #include "sb6.h"
+#include <vector>
 
 static const std::map<std::string, GLuint> ShaderTypesMap
 {
@@ -16,6 +17,7 @@ class ShaderProgram
 {
 public:
 	ShaderProgram();
+	~ShaderProgram();
 	void CreateProgram();
 	void DeleteProgram();
 	void AttachShader(std::string filename);
@@ -23,8 +25,13 @@ public:
 	bool IsLinked();
 	void Use();
 	void Link();
+	void ClearShaders();
 private:
+	void GetShaderString(std::string filename, char* resultString);
+	bool CheckShader(GLuint shader);
+	bool CheckShaderProgram(GLuint shaderProgram);
 	bool _isLinked;
 	GLuint _handler;
 	std::string GetFileExtension(std::string filename);
+	std::vector<GLuint> _attachedShaders;
 };
