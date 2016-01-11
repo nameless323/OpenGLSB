@@ -5,13 +5,17 @@
 #include <shader.h>
 #include "../Utils.h"
 #include "vmath.h"
+#include "../ShaderProgram.h"
 
-class Dummy : public sb6::application
+class TessTrigs : public sb6::application
 {
 public:
 	void startup()
 	{
-		_renderingProgram = GetShaderProgram("Shaders/Common/Default.vert", "Shaders/Common/Default.frag");
+		_renderingProgram.CreateProgram();
+		_renderingProgram.AttachShader("Shaders/Common/Default.vert");
+		_renderingProgram.AttachShader("Shaders/Common/Default.frag");
+		_renderingProgram.Link();
 		glGenVertexArrays(1, &_vao);
 		glBindVertexArray(_vao);
 
@@ -39,7 +43,7 @@ public:
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementsBuffer);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-		glUseProgram(_renderingProgram);
+		_renderingProgram.Use();
 	}
 
 	void onResize(int w, int h)
@@ -60,7 +64,7 @@ public:
 
 	void shutdown()
 	{
-		glDeleteProgram(_renderingProgram);
+		_renderingProgram.DeleteProgram();
 
 		glDisableVertexAttribArray(0);
 
@@ -73,7 +77,6 @@ public:
 	}
 
 private:
-	GLuint _renderingProgram;
 	GLuint _vao;
 	GLuint _vertsBuffer;
 	GLuint _elementsBuffer;
@@ -81,8 +84,8 @@ private:
 	vmath::mat4 projMatrix;
 	GLfloat mvLocation = 2;
 	GLfloat projLocation = 3;
-
+	ShaderProgram _renderingProgram;
 };
 
-//DECLARE_MAIN(Dummy);
+DECLARE_MAIN(TessTrigs);
 

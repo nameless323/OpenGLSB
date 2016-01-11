@@ -2,7 +2,7 @@
 
 ShaderProgram::ShaderProgram() : _isLinked(false), _handler(0)
 {
-	CreateProgram();
+	//CreateProgram();
 }
 
 ShaderProgram::~ShaderProgram()
@@ -32,7 +32,6 @@ void ShaderProgram::AttachShader(std::string filename) //todo: yep, return bool 
 		OutputDebugStringA("Trying to attach shader. Shader program is not created!");
 		return;
 	}
-
 	std::string fileExt = GetFileExtension(filename);
 	auto it = ShaderTypesMap.find(fileExt);
 	if (it == ShaderTypesMap.end())
@@ -40,18 +39,11 @@ void ShaderProgram::AttachShader(std::string filename) //todo: yep, return bool 
 		OutputDebugStringA("Shader extension is not found");
 		return;
 	}
-	GLuint shaderType = it->second;
+	GLint shaderType = it->second;
 	GLuint shader = glCreateShader(shaderType);
 	
-	char* shaderString = nullptr;
-	GetShaderString(filename, shaderString);
-	glShaderSource(shader, 1, &shaderString, nullptr);
+	AddSourceToShader(filename, shader);
 	glCompileShader(shader);
-	if (shaderString != nullptr)
-	{
-		delete[] shaderString;
-		shaderString = nullptr;
-	}
 
 	bool compileSucessfull = CheckShader(shader);
 	if (compileSucessfull)
@@ -100,16 +92,19 @@ void ShaderProgram::ClearShaders()
 	_attachedShaders.clear();
 }
 
-void ShaderProgram::GetShaderString(std::string filename, char* resultString)
+void ShaderProgram::AddSourceToShader(std::string filename, GLuint shader)
 {
 	FILE* fp = fopen(filename.c_str(), "rb");
 	fseek(fp, 0, SEEK_END);
 	size_t fileSize = ftell(fp);
 	fseek(fp, 0, SEEK_SET);
-	resultString = new char[fileSize + 1];
-	fread(resultString, 1, fileSize, fp);
-	resultString[fileSize] = 0;
+	char* buffer = new char[fileSize + 1];
+	fread(buffer, 1, fileSize, fp);
+	buffer[fileSize] = 0;
 	fclose(fp);
+
+	glShaderSource(shader, 1, &buffer, nullptr);
+	delete[] buffer;
 }
 
 bool ShaderProgram::CheckShader(GLuint shader)

@@ -4,7 +4,7 @@
 #include "sb6.h"
 #include <vector>
 
-static const std::map<std::string, GLuint> ShaderTypesMap
+static const std::map<std::string, GLint> ShaderTypesMap
 {
 	{ ".vert", GL_VERTEX_SHADER },
 	{ ".frag", GL_FRAGMENT_SHADER },
@@ -27,7 +27,7 @@ public:
 	void Link();
 	void ClearShaders();
 private:
-	void GetShaderString(std::string filename, char* resultString);
+	void AddSourceToShader(std::string filename, GLuint shader);
 	bool CheckShader(GLuint shader);
 	bool CheckShaderProgram(GLuint shaderProgram);
 	bool _isLinked;
