@@ -88,7 +88,7 @@ void ShaderProgram::Link()
 void ShaderProgram::ClearShaders()
 {
 	for (auto it = _attachedShaders.begin(); it != _attachedShaders.end(); ++it)
-		glDeleteProgram(*it);
+		glDeleteShader(*it);
 	_attachedShaders.clear();
 }
 
