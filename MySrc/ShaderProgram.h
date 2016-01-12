@@ -26,6 +26,11 @@ public:
 	void Use();
 	void Link();
 	void ClearShaders();
+	void SetUniform(float val, std::string name);
+	void SetUniform(float val, int index);
+	void SetUniform(int val, std::string name);
+	void SetUniform(int val, int index);
+	//todo blabla other uniform and vertex attribs
 private:
 	void AddSourceToShader(std::string filename, GLuint shader);
 	bool CheckShader(GLuint shader);

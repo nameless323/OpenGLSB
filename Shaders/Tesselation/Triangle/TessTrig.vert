@@ -8,5 +8,5 @@ void main()
 							vec4(-0.25, -0.25, 0.5, 1.0),
 							vec4(0.25, 0.25, 0.5, 1.0)
 						);
-	gl_Position = vertices[gl_VertexID];
+	gl_Position = verts[gl_VertexID];
 }
