@@ -19,6 +19,7 @@ public:
 	ShaderProgram();
 	~ShaderProgram();
 	void CreateProgram();
+	void CreateAndLinkProgram(std::string vertFilename, std::string fragFilename);
 	void DeleteProgram();
 	void AttachShader(std::string filename);
 	GLuint GetHandler();

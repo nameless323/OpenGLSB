@@ -17,6 +17,14 @@ void ShaderProgram::CreateProgram()
 	_handler = glCreateProgram();
 }
 
+void ShaderProgram::CreateAndLinkProgram(std::string vertFilename, std::string fragFilename)
+{
+	_handler = glCreateProgram();
+	AttachShader(vertFilename);
+	AttachShader(fragFilename);
+	Link();
+}
+
 void ShaderProgram::DeleteProgram()
 {
 	_isLinked = false;
