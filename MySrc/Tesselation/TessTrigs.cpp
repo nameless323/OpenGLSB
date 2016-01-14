@@ -60,5 +60,5 @@ private:
 	ShaderProgram _renderingProgram;
 };
 
-DECLARE_MAIN(TessTrigs);
+//DECLARE_MAIN(TessTrigs);
 

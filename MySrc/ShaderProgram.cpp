@@ -53,7 +53,7 @@ void ShaderProgram::AttachShader(std::string filename) //todo: yep, return bool 
 	AddSourceToShader(filename, shader);
 	glCompileShader(shader);
 
-	bool compileSucessfull = CheckShader(shader);
+	bool compileSucessfull = CheckShader(shader, shaderType);
 	if (compileSucessfull)
 	{
 		glAttachShader(_handler, shader);
@@ -115,15 +115,19 @@ void ShaderProgram::AddSourceToShader(std::string filename, GLuint shader)
 	delete[] buffer;
 }
 
-bool ShaderProgram::CheckShader(GLuint shader)
+bool ShaderProgram::CheckShader(GLuint shader, GLint shaderType)
 {
 	GLint status;
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
 
 	if (status == GL_FALSE)
 	{
-		OutputDebugStringA("---------------\n");
-		OutputDebugStringA("Vertex Shader Error:\n");
+
+		auto shaderStringIterator = ShaderTypesSringMap.find(shaderType);
+		std::stringstream ss;
+		ss << "---------------" << std::endl << shaderStringIterator->second << " Error" << std::endl;
+		OutputDebugStringA(ss.str().c_str());
+
 		GLint len;
 		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &len);
 		char* log = new char[len + 1];

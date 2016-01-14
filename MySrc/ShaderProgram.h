@@ -3,14 +3,24 @@
 #include <map>
 #include "sb6.h"
 #include <vector>
+#include <sstream>
 
 static const std::map<std::string, GLint> ShaderTypesMap
 {
-	{ ".vert", GL_VERTEX_SHADER },
-	{ ".frag", GL_FRAGMENT_SHADER },
-	{ ".geom", GL_GEOMETRY_SHADER },
-	{ ".tesc", GL_TESS_CONTROL_SHADER },
-	{ ".tese", GL_TESS_EVALUATION_SHADER }
+	{".vert", GL_VERTEX_SHADER},
+	{".frag", GL_FRAGMENT_SHADER},
+	{".geom", GL_GEOMETRY_SHADER},
+	{".tesc", GL_TESS_CONTROL_SHADER},
+	{".tese", GL_TESS_EVALUATION_SHADER}
+};
+
+static const std::map<GLint, std::string> ShaderTypesSringMap
+{
+	{GL_VERTEX_SHADER, "Vertex Shader"},
+	{GL_FRAGMENT_SHADER, "Fragment Shader"},
+	{GL_GEOMETRY_SHADER, "Geometry Shader"},
+	{GL_TESS_CONTROL_SHADER, "Tesselation Control Shader"},
+	{GL_TESS_EVALUATION_SHADER, "Tesselation Evaluation Shader"}
 };
 
 class ShaderProgram
@@ -34,10 +44,11 @@ public:
 	//todo blabla other uniform and vertex attribs
 private:
 	void AddSourceToShader(std::string filename, GLuint shader);
-	bool CheckShader(GLuint shader);
+	bool CheckShader(GLuint shader, GLint shaderType);
 	bool CheckShaderProgram(GLuint shaderProgram);
 	bool _isLinked;
 	GLuint _handler;
 	std::string GetFileExtension(std::string filename);
 	std::vector<GLuint> _attachedShaders;
 };
+
