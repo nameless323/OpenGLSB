@@ -167,5 +167,5 @@ private:
 	mat4 rotationMat;
 };
 
-DECLARE_MAIN(TessCube);
+//DECLARE_MAIN(TessCube);
 

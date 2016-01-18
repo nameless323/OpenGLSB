@@ -44,7 +44,7 @@ public:
 	//todo blabla other uniform and vertex attribs
 private:
 	void AddSourceToShader(std::string filename, GLuint shader);
-	bool CheckShader(GLuint shader, GLint shaderType);
+	bool CheckShader(GLuint shader, GLint shaderType, std::string filename);
 	bool CheckShaderProgram(GLuint shaderProgram);
 	bool _isLinked;
 	GLuint _handler;

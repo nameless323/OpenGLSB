@@ -53,7 +53,7 @@ void ShaderProgram::AttachShader(std::string filename) //todo: yep, return bool 
 	AddSourceToShader(filename, shader);
 	glCompileShader(shader);
 
-	bool compileSucessfull = CheckShader(shader, shaderType);
+	bool compileSucessfull = CheckShader(shader, shaderType, filename);
 	if (compileSucessfull)
 	{
 		glAttachShader(_handler, shader);
@@ -115,7 +115,7 @@ void ShaderProgram::AddSourceToShader(std::string filename, GLuint shader)
 	delete[] buffer;
 }
 
-bool ShaderProgram::CheckShader(GLuint shader, GLint shaderType)
+bool ShaderProgram::CheckShader(GLuint shader, GLint shaderType, std::string filename)
 {
 	GLint status;
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
@@ -125,7 +125,7 @@ bool ShaderProgram::CheckShader(GLuint shader, GLint shaderType)
 
 		auto shaderStringIterator = ShaderTypesSringMap.find(shaderType);
 		std::stringstream ss;
-		ss << "---------------" << std::endl << shaderStringIterator->second << " Error" << std::endl;
+		ss << "---------------" << std::endl << shaderStringIterator->second << " Error at file '" << filename << "'"<< std::endl;
 		OutputDebugStringA(ss.str().c_str());
 
 		GLint len;
