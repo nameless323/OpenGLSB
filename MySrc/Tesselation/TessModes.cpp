@@ -91,5 +91,5 @@ private:
 	int _index;
 };
 
-DECLARE_MAIN(TessModes);
+//DECLARE_MAIN(TessModes);
 
