@@ -19,7 +19,7 @@ public:
 		_renderingProgram.CreateProgram();
 		_renderingProgram.AttachShader("Shaders/Tesselation/Terrain/Terrain.vert");
 		_renderingProgram.AttachShader("Shaders/Tesselation/Terrain/Terrain.tesc");
-		_renderingProgram.AttachShader("Shaders/Tesselation/Terrain/Terrain.tece");
+		_renderingProgram.AttachShader("Shaders/Tesselation/Terrain/Terrain.tese");
 		_renderingProgram.AttachShader("Shaders/Tesselation/Terrain/Terrain.frag");
 		_renderingProgram.Link();
 
@@ -86,8 +86,6 @@ public:
 		else
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glDrawArraysInstanced(GL_PATCHES, 0, 4, 64 * 64);
-		//		glClear(GL_DEPTH_BUFFER_BIT);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, nullptr);
 	}
 
 	void shutdown()
@@ -145,6 +143,6 @@ private:
 	} _uniforms;
 };
 
-//DECLARE_MAIN(Dummy);
+DECLARE_MAIN(Terrain);
 
 

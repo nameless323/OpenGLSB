@@ -55,5 +55,5 @@ private:
 	GLuint _vao;
 };
 
-DECLARE_MAIN(TessAndGeom);
+//DECLARE_MAIN(TessAndGeom);
 
