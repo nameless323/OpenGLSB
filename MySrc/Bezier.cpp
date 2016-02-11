@@ -100,7 +100,6 @@ public:
 		glClearBufferfv(GL_COLOR, 0, bckColor);
 		glClearBufferfv(GL_DEPTH, 0, white);
 
-		int i;
 		static double _lastTime = 0.0;
 		static double _totalTime = 0.0;
 
@@ -222,5 +221,5 @@ private:
 	} _uniforms;
 };
 
-//DECLARE_MAIN(Bezier);
+DECLARE_MAIN(Bezier);
 

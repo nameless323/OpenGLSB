@@ -143,6 +143,6 @@ private:
 	} _uniforms;
 };
 
-DECLARE_MAIN(Terrain);
+//DECLARE_MAIN(Terrain);
 
 
