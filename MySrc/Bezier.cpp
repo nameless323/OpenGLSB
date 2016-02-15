@@ -221,5 +221,5 @@ private:
 	} _uniforms;
 };
 
-DECLARE_MAIN(Bezier);
+//DECLARE_MAIN(Bezier);
 
