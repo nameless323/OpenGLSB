@@ -86,5 +86,5 @@ private:
 	int _index;
 };
 
-DECLARE_MAIN(TessSubdivsionModes);
+//DECLARE_MAIN(TessSubdivsionModes);
 
