@@ -123,5 +123,5 @@ private:
 
 };
 
-DECLARE_MAIN(TessTest);
+//DECLARE_MAIN(TessTest);
 
