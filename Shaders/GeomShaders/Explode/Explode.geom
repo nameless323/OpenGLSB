@@ -9,7 +9,7 @@ in VS_OUT
 	vec4 color;
 } gs_in[];
 
-out GL_OUT
+out GS_OUT
 {
 	vec3 normal;
 	vec4 color;
