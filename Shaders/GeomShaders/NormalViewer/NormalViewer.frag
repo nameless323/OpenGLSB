@@ -10,5 +10,5 @@ out vec4 color;
 
 void main()
 {
-	color = vec4(1.0) * abs(normalize(fs_in.normal).z);
+	color = vec4(abs(normalize(fs_in.normal)), 1.0);//vec4(1.0) * abs(normalize(fs_in.normal).z);
 }

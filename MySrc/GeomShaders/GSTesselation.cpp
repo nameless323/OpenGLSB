@@ -104,5 +104,5 @@ private:
 	sb6::object _object;
 };
 
-DECLARE_MAIN(GSTesselation);
+//DECLARE_MAIN(GSTesselation);
 

@@ -12,7 +12,7 @@ in VS_OUT
 	vec4 color;
 } gs_in[];
 
-out GL_OUT
+out GS_OUT
 {
 	vec3 normal;
 	vec4 color;
@@ -36,8 +36,8 @@ void main()
 	gs_out.normal = gs_in[0].normal;
 	gs_out.color = gs_in[0].color;
 	EmitVertex();
-	EmitPrimitive();
-
+	EndPrimitive();
+	
 	gl_Position = mvp * gl_in[0].gl_Position;
 	gs_out.normal = gs_in[0].normal;
 	gs_out.color = gs_in[0].color;
@@ -47,5 +47,5 @@ void main()
 	gs_out.normal = gs_in[0].normal;
 	gs_out.color = gs_in[0].color;
 	EmitVertex();
-	EmitPrimitive();
+	EndPrimitive();
 }
