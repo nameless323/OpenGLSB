@@ -5,16 +5,16 @@
 
 using vmath::mat4;
 
-class NormalViewer : public sb6::application
+class Multiviewport : public sb6::application
 {
 public:
 	void startup()
 	{
 		//		_renderingProgram.CreateAndLinkProgram("Shaders/Common/Default.vert", "Shaders/Common/Default.frag");
 		_shader.CreateProgram();
-		_shader.AttachShader("Shaders/GeomShaders/NormalViewer/NormalViewer.vert");
-		_shader.AttachShader("Shaders/GeomShaders/NormalViewer/NormalViewer.geom");
-		_shader.AttachShader("Shaders/GeomShaders/NormalViewer/NormalViewer.frag");
+		_shader.AttachShader("Shaders/GeomShaders/Multiviewport/Multiviewport.vert");
+		_shader.AttachShader("Shaders/GeomShaders/Multiviewport/Multiviewport.geom");
+		_shader.AttachShader("Shaders/GeomShaders/Multiviewport/Multiviewport.frag");
 		_shader.Link();
 
 		_mvLocation = glGetUniformLocation(_shader.GetHandler(), "mv_matrix");
@@ -47,7 +47,7 @@ public:
 		mat4 projMatrix = vmath::perspective(50.0f, (float)info.windowWidth / (float)info.windowHeight, 0.1f, 1000.0f);
 		mat4 mvMatrix = vmath::translate(0.0f, -4.0f, -20.5f) *
 			vmath::rotate((float)currentTime * 45.0f, 0.0f, 1.0f, 0.0f);// *
-//			vmath::rotate((float)currentTime * 81.0f, 1.0f, 0.0f, 0.0f);
+																		//			vmath::rotate((float)currentTime * 81.0f, 1.0f, 0.0f, 0.0f);
 
 		glUniformMatrix4fv(_mvLocation, 1, GL_FALSE, mvMatrix);
 		glUniformMatrix4fv(_projLocation, 1, GL_FALSE, projMatrix);
@@ -79,5 +79,5 @@ private:
 	sb6::object _object;
 };
 
-//DECLARE_MAIN(NormalViewer);
+//DECLARE_MAIN(Multiviewport);
 
