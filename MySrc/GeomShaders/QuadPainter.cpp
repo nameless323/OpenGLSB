@@ -136,5 +136,5 @@ private:
 	bool _paused;
 };
 
-DECLARE_MAIN(QuadPainter);
+//DECLARE_MAIN(QuadPainter);
 
