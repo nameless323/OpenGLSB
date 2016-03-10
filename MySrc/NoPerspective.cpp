@@ -121,5 +121,5 @@ private:
 	} _uniforms;
 };
 
-DECLARE_MAIN(NoPerspective);
+//DECLARE_MAIN(NoPerspective);
 
