@@ -80,5 +80,5 @@ private:
 	sb6::object _object;
 };
 
-DECLARE_MAIN(DepthClamp);
+//DECLARE_MAIN(DepthClamp);
 
