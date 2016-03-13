@@ -139,5 +139,5 @@ private:
 	sb6::object _object;
 };
 
-DECLARE_MAIN(Multiscissor);
+//DECLARE_MAIN(Multiscissor);
 
