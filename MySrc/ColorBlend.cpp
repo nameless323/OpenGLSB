@@ -153,5 +153,5 @@ private:
 	sb6::object _object;
 };
 
-DECLARE_MAIN(ColorBlend);
+//DECLARE_MAIN(ColorBlend);
 
