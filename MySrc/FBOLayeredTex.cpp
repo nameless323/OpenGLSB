@@ -18,8 +18,8 @@ public:
 		_layersShader.Link();
 
 		_showLayersShader.CreateProgram();
-		_showLayersShader.AttachShader("Shaders/RenderToTex/RenderToTex.vert");
-		_showLayersShader.AttachShader("Shaders/RenderToTex/RenderToTex2.frag");
+		_showLayersShader.AttachShader("Shaders/FBOLayeredTex/FBOLayeredTexShow.vert");
+		_showLayersShader.AttachShader("Shaders/FBOLayeredTex/FBOLayeredTexShow.frag");
 		_showLayersShader.Link();
 
 		glGenVertexArrays(1, &_vao);
@@ -85,12 +85,13 @@ public:
 				vmath::rotate((float)currentTime * 30.0f * fi, 1.0f, 0.0f, 0.0f);
 		}
 		glUnmapBuffer(GL_UNIFORM_BUFFER);
+
 		static const GLenum ca0 = GL_COLOR_ATTACHMENT0;
 		glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
 		glDrawBuffers(1, &ca0);
 		glViewport(0, 0, 256, 256);
 		glClearBufferfv(GL_COLOR, 0, black);
-		glClearBufferfv(GL_COLOR, 0, white);
+		glClearBufferfv(GL_DEPTH, 0, white);
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
 		_layersShader.Use();
@@ -103,7 +104,7 @@ public:
 		glViewport(0, 0, info.windowWidth, info.windowHeight);
 		glClearBufferfv(GL_COLOR, 0, gray);
 
-		glActiveTexture(GL_TEXTURE0);
+//		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D_ARRAY, _arrayTex);
 		glDisable(GL_DEPTH_TEST);
 
@@ -149,5 +150,5 @@ private:
 	sb6::object _object;
 };
 
-//DECLARE_MAIN(FBOLayeredTex);
+DECLARE_MAIN(FBOLayeredTex);
 
