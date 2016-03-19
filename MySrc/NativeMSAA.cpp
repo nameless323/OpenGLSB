@@ -200,5 +200,5 @@ private:
 	sb6::object _object;
 };
 
-DECLARE_MAIN(NativeMSAA);
+//DECLARE_MAIN(NativeMSAA);
 
