@@ -209,5 +209,5 @@ private:
 	sb6::object _object;
 };
 
-DECLARE_MAIN(SampleShading);
+//DECLARE_MAIN(SampleShading);
 
