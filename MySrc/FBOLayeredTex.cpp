@@ -150,5 +150,5 @@ private:
 	sb6::object _object;
 };
 
-DECLARE_MAIN(FBOLayeredTex);
+//DECLARE_MAIN(FBOLayeredTex);
 
