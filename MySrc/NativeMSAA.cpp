@@ -5,10 +5,17 @@
 
 using vmath::mat4;
 
-class LineSmoothing : public sb6::application
+class NativeMSAA : public sb6::application
 {
 public:
-	LineSmoothing() : _manyCubes(false), _wireframe(false), _paused(false) {}
+	NativeMSAA() : _manyCubes(false), _wireframe(false), _paused(false) {}
+
+
+	void init() override
+	{
+		sb6::application::init();
+		info.samples = 16;
+	}
 
 	void DrawManyCubes(float currentTime)
 	{
@@ -28,7 +35,7 @@ public:
 
 	void DrawSingleCube(float currentTime)
 	{
-		float f = (float)currentTime * 0.3f;
+		float f = (float)currentTime * 0.1f;
 		mat4 mv = vmath::translate(0.0f, 0.0f, -2.0f) *
 			vmath::rotate((float)currentTime * 45.0f, 0.0f, 1.0f, 0.0f) *
 			vmath::rotate((float)currentTime * 81.0f, 1.0f, 0.0f, 0.0f);
@@ -113,7 +120,7 @@ public:
 		static double ct = 0;
 		static double prevT = 0;
 		double dt = 0;
-		
+
 		if (!_paused)
 			dt = prevT - currentTime;
 		prevT = currentTime;
@@ -196,5 +203,5 @@ private:
 	sb6::object _object;
 };
 
-//DECLARE_MAIN(LineSmoothing);
+DECLARE_MAIN(NativeMSAA);
 
