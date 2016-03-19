@@ -154,14 +154,11 @@ public:
 				_manyCubes = !_manyCubes;
 			if (key == 'Q')
 			{
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glEnable(GL_LINE_SMOOTH);
+				glEnable(GL_MULTISAMPLE);
 			}
 			if (key == 'W')
 			{
-				glDisable(GL_BLEND);
-				glDisable(GL_LINE_SMOOTH);
+				glDisable(GL_MULTISAMPLE);
 			}
 			if (key == 'E')
 			{
