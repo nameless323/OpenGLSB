@@ -86,5 +86,5 @@ private:
 	sb6::object _object;
 };
 
-DECLARE_MAIN(Exposure);
+//DECLARE_MAIN(Exposure);
 
