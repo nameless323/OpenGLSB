@@ -11,8 +11,8 @@ in VS_OUT
 	flat int material_index;
 } fs_in;
 
-uniform float bloom_thresh_min = 0.8;
-uniform float bloom_thresh_max = 1.2;
+layout (location = 4) uniform float bloom_thresh_min = 0.8;
+layout (location = 5) uniform float bloom_thresh_max = 1.2;
 
 struct material_t
 {

@@ -142,5 +142,5 @@ private:
 	sb6::object _object;
 };
 
-DECLARE_MAIN(Tonemapping);
+//DECLARE_MAIN(Tonemapping);
 
