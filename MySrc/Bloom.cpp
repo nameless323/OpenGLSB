@@ -178,7 +178,7 @@ public:
 		glBindVertexArray(_fsQuadVAO);
 		glBindFramebuffer(GL_FRAMEBUFFER, _filterFBO[0]);
 		glBindTexture(GL_TEXTURE_2D, _brightpassTex);
-		glViewport(0, 0, info.windowWidth, info.windowHeight);
+		glViewport(0, 0, info.windowHeight, info.windowWidth);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, _filterFBO[1]);
