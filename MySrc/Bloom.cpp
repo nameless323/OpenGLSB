@@ -137,7 +137,7 @@ public:
 		lastTime = currentTime;
 		float t = (float)totalTime;
 
-		glViewport(0, 0, info.windowWidth, info.windowHeight);
+        glViewport(0, 0, info.windowWidth, info.windowHeight);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, _renderFBO);
 		glClearBufferfv(GL_COLOR, 0, back);
@@ -324,5 +324,5 @@ private:
 	sb6::object _object;
 };
 
-DECLARE_MAIN(Bloom);
+//DECLARE_MAIN(Bloom);
 
