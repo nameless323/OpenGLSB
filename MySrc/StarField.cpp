@@ -137,5 +137,5 @@ private:
     } Uniforms;
 };
 
-DECLARE_MAIN(StarField);
+//DECLARE_MAIN(StarField);
 
