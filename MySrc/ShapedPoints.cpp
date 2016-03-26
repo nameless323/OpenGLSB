@@ -86,5 +86,5 @@ private:
     } Uniforms;
 };
 
-DECLARE_MAIN(ShapedPoints);
+//DECLARE_MAIN(ShapedPoints);
 
