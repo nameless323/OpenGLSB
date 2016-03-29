@@ -161,5 +161,5 @@ private:
     } Mode;
 };
 
-DECLARE_MAIN(PixelsRead);
+//DECLARE_MAIN(PixelsRead);
 
