@@ -1,6 +1,7 @@
 #include <sb6.h>
 #include <cmath>
 #include <iostream>
+#include <sb6ktx.h>
 #include <sstream>
 #include <shader.h>
 #include "Utils.h"
@@ -37,6 +38,7 @@ public:
         _showShader.Link();
 
         glGenTextures(3, _images);
+        _images[0] = sb6::ktx::file::load("media/textures/salad-gray.ktx");
 
         for (int i = 1; i < 3; i++)
         {
@@ -58,13 +60,13 @@ public:
         _compShader.Use();
 
         glBindImageTexture(0, _images[0], 0, GL_FALSE, 0, GL_READ_ONLY, GL_R32F);
-        glBindImageTexture(1, _images[1], 0, GL_FALSE, 0, GL_READ_ONLY, GL_R32F);
+        glBindImageTexture(1, _images[1], 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_R32F);
         
         glDispatchCompute(NUM_ELEMENTS, 1, 1);
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
 
         glBindImageTexture(0, _images[1], 0, GL_FALSE, 0, GL_READ_ONLY, GL_R32F);
-        glBindImageTexture(1, _images[2], 0, GL_FALSE, 0, GL_READ_ONLY, GL_R32F);
+        glBindImageTexture(1, _images[2], 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_R32F);
 
         glDispatchCompute(NUM_ELEMENTS, 1, 1);
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
