@@ -109,5 +109,5 @@ private:
     float _outputData[NUM_ELEMENTS];
 };
 
-DECLARE_MAIN(PrefixSum);
+//DECLARE_MAIN(PrefixSum);
 
