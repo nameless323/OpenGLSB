@@ -276,5 +276,5 @@ private:
     float _focalDepth;
 };
 
-//DECLARE_MAIN(DepthOfField);
+DECLARE_MAIN(DepthOfField);
 

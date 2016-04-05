@@ -108,5 +108,5 @@ private:
     float _outputData[NUM_ELEMENTS];
 };
 
-DECLARE_MAIN(PrefixSum2D);
+//DECLARE_MAIN(PrefixSum2D);
 
