@@ -19,6 +19,9 @@ enum
 class Flocking : public sb6::application
 {
 public:
+    Flocking() : _frameIndex(0)
+    {}
+
     void LoadShaders()
     {
         _shader.CreateProgram();
@@ -30,6 +33,7 @@ public:
 
         _compShader.CreateProgram();
         _compShader.AttachShader("Shaders/Flocking/Flocking.comp");
+        _compShader.Link();
 
         Uniforms.Update.Goal = glGetUniformLocation(_compShader.GetHandler(), "goal");
     }
@@ -175,5 +179,5 @@ private:
     GLuint _frameIndex;
 };
 
-//DECLARE_MAIN(Flocking);
+DECLARE_MAIN(Flocking);
 
