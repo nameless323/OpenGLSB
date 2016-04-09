@@ -10,18 +10,18 @@
 #include <object.h>
 
 
-class SphereEnvMap : public sb6::application
+class RectEnvMap : public sb6::application
 {
 public:
-    SphereEnvMap() : _envMapIndex(0)
+    RectEnvMap() : _envMapIndex(0)
     {
     }
 
     void LoadShaders()
     {
         _shader.CreateProgram();
-        _shader.AttachShader("Shaders/SphereEnvMap/SphereEnvMap.vert");
-        _shader.AttachShader("Shaders/SphereEnvMap/SphereEnvMap.frag");
+        _shader.AttachShader("Shaders/RectEnvMap/RectEnvMap.vert");
+        _shader.AttachShader("Shaders/RectEnvMap/RectEnvMap.frag");
         _shader.Link();
 
         Uniforms.MV = glGetUniformLocation(_shader.GetHandler(), "mv_matrix");
@@ -31,10 +31,10 @@ public:
     void startup() override
     {
         LoadShaders();
-        _envMaps[0] = sb6::ktx::file::load("media/textures/envmaps/spheremap1.ktx");
-        _envMaps[1] = sb6::ktx::file::load("media/textures/envmaps/spheremap2.ktx");
-        _envMaps[2] = sb6::ktx::file::load("media/textures/envmaps/spheremap3.ktx");
+        _envMaps[0] = sb6::ktx::file::load("media/textures/envmaps/equirectangularmap1.ktx");
         _texEnvMap = _envMaps[_envMapIndex];
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
         _object.load("media/objects/dragon.sbm");
         glEnable(GL_CULL_FACE);
@@ -100,5 +100,5 @@ private:
     sb6::object _object;
 };
 
-//DECLARE_MAIN(SphereEnvMap);
+DECLARE_MAIN(RectEnvMap);
 
