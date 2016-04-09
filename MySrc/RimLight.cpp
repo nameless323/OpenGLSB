@@ -132,5 +132,5 @@ private:
     bool _paused;
 };
 
-DECLARE_MAIN(RimLight);
+//DECLARE_MAIN(RimLight);
 
