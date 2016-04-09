@@ -179,5 +179,5 @@ private:
     GLuint _frameIndex;
 };
 
-DECLARE_MAIN(Flocking);
+//DECLARE_MAIN(Flocking);
 
