@@ -10,34 +10,33 @@
 #include <object.h>
 
 
-class BumpMap : public sb6::application
+class SphereEnvMap : public sb6::application
 {
 public:
-    BumpMap() : _paused(false)
+    SphereEnvMap() : _envMapIndex(0)
     {
     }
 
     void LoadShaders()
     {
         _shader.CreateProgram();
-        _shader.AttachShader("Shaders/BumpMap/BumpMap.vert");
-        _shader.AttachShader("Shaders/BumpMap/BumpMap.frag");
+        _shader.AttachShader("Shaders/SphereEnvMap/SphereEnvMap.vert");
+        _shader.AttachShader("Shaders/SphereEnvMap/SphereEnvMap.frag");
         _shader.Link();
 
         Uniforms.MV = glGetUniformLocation(_shader.GetHandler(), "mv_matrix");
         Uniforms.Proj = glGetUniformLocation(_shader.GetHandler(), "proj_matrix");
-        Uniforms.LightPos = glGetUniformLocation(_shader.GetHandler(), "light_pos");
     }
 
     void startup() override
     {
         LoadShaders();
-        glActiveTexture(GL_TEXTURE0);
-        Textures.Color = sb6::ktx::file::load("media/textures/ladybug_co.ktx");
-        glActiveTexture(GL_TEXTURE1);
-        Textures.Normals = sb6::ktx::file::load("media/textures/ladybug_nm.ktx");
+        _envMaps[0] = sb6::ktx::file::load("media/textures/envmaps/spheremap1.ktx");
+        _envMaps[1] = sb6::ktx::file::load("media/textures/envmaps/spheremap2.ktx");
+        _envMaps[2] = sb6::ktx::file::load("media/textures/envmaps/spheremap3.ktx");
+        _texEnvMap = _envMaps[_envMapIndex];
 
-        _object.load("media/objects/ladybug.sbm");
+        _object.load("media/objects/dragon.sbm");
         glEnable(GL_CULL_FACE);
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
@@ -52,27 +51,24 @@ public:
         static double lastTime = 0.0;
         static double totalTime = 0.0;
 
-        if (!_paused)
-            totalTime += (currentTime - lastTime);
-        lastTime = currentTime;
-        float f = (float)totalTime;
 
         glViewport(0, 0, info.windowWidth, info.windowHeight);
         glClearBufferfv(GL_COLOR, 0, black);
         glClearBufferfv(GL_DEPTH, 0, &one);
+        glBindTexture(GL_TEXTURE_2D, _texEnvMap);
         _shader.Use();
 
-        vmath::mat4 proj = vmath::perspective(50.0f,
+        vmath::mat4 proj = vmath::perspective(60.0f,
             (float)info.windowWidth / (float)info.windowHeight,
             0.1f,
             1000.0f);
         glUniformMatrix4fv(Uniforms.Proj, 1, GL_FALSE, proj);
-        vmath::mat4 mv = vmath::translate(0.0f, -0.2f, -5.5f) *
-            vmath::rotate(14.5f, 1.0f, 0.0f, 0.0f) *
-            vmath::rotate(-20.0f, 0.0f, 1.0f, 0.0f);
+        vmath::mat4 mv = vmath::translate(0.0f, 0.0f, -15.0f) *
+            vmath::rotate((float)currentTime, 1.0f, 0.0f, 0.0f) *
+            vmath::rotate((float)currentTime * 1.1f, 0.0f, 1.0f, 0.0f) *
+            vmath::translate(0.0f, -4.0f, 0.0f);
         glUniformMatrix4fv(Uniforms.MV, 1, GL_FALSE, mv);
 
-        glUniform3fv(Uniforms.LightPos, 1, vmath::vec3(40.0f * sinf(f), 30.0f + 20.0f * cosf(f), 40.0f));
         _object.render();
     }
 
@@ -82,8 +78,9 @@ public:
         {
             switch (key)
             {
-            case 'P':
-                _paused = !_paused;
+            case 'E':
+                _envMapIndex = (_envMapIndex + 1) % 3;
+                _texEnvMap = _envMaps[_envMapIndex];
                 break;
             }
         }
@@ -96,22 +93,12 @@ private:
     {
         GLuint MV;
         GLuint Proj;
-        GLuint LightPos;
     } Uniforms;
-
-    struct
-    {
-        GLuint Color;
-        GLuint Normals;
-    } Textures;
-
-    vmath::mat4 _rot;
+    GLuint _texEnvMap;
+    GLuint _envMaps[3];
+    int _envMapIndex;
     sb6::object _object;
-    vmath::vec3 _rimColor;
-    float _rimPower;
-    bool _rimEnable;
-    bool _paused;
 };
 
-//DECLARE_MAIN(BumpMap);
+DECLARE_MAIN(SphereEnvMap);
 
