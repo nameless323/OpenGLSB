@@ -126,5 +126,5 @@ private:
     sb6::object _object;
 };
 
-DECLARE_MAIN(CubemapEnv);
+//DECLARE_MAIN(CubemapEnv);
 
