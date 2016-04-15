@@ -285,5 +285,5 @@ private:
     bool _paused;
 };
 
-DECLARE_MAIN(ShadowMapping);
+//DECLARE_MAIN(ShadowMapping);
 
