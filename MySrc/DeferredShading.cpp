@@ -125,7 +125,7 @@ public:
             _renderingShader.Use();
 
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE0, _diffuseTex);
+        glBindTexture(GL_TEXTURE_2D, _diffuseTex);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, _nmTex);
 
@@ -143,7 +143,7 @@ public:
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, _GBufferTex[1]);
 
-        if (vis_mode)
+        if (vis_mode == VIS_OFF)
             _lightShader.Use();
         else
         {
@@ -207,7 +207,7 @@ public:
         _locVisMode = glGetUniformLocation(_visShader.GetHandler(), "vis_mode");
     }
 
-    virtual void onKey(int key, int action)
+    void onKey(int key, int action) override
     {
         if (action)
         {
@@ -276,4 +276,4 @@ private:
 #pragma pack (pop)
 };
 
-//DECLARE_MAIN(DeferredShading);
+DECLARE_MAIN(DeferredShading);
