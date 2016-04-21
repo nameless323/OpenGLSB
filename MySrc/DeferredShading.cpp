@@ -276,4 +276,4 @@ private:
 #pragma pack (pop)
 };
 
-DECLARE_MAIN(DeferredShading);
+//DECLARE_MAIN(DeferredShading);
