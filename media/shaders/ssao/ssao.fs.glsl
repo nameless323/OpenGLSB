@@ -83,7 +83,7 @@ void main(void)
             // Read depth from current fragment
             float their_depth =
                 textureLod(sNormalDepth,
-                           (P + dir.xy * f * ssao_radius), 0).w;
+                           (P + dir.xy * f * ssao_radius*100), 0).w;
 
             // Calculate a weighting (d) for this fragment's
             // contribution to occlusion
