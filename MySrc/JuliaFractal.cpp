@@ -243,5 +243,5 @@ private:
     
 };
 
-DECLARE_MAIN(JuliaFractal);
+//DECLARE_MAIN(JuliaFractal);
 
