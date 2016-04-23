@@ -8,8 +8,8 @@ layout (location = 0) out vec4 color;
 uniform float ssao_level = 1.0;
 uniform float object_level = 1.0;
 uniform float ssao_radius = 5.0;
-uniform bool weight_by_angle = true;
-uniform uint point_count = 8;
+uniform int weight_by_angle = 0;
+uniform uint point_count = 4;
 uniform bool randomize_points = true;
 
 layout (binding = 0, std140) uniform SAMPLE_POINTS
@@ -21,7 +21,7 @@ layout (binding = 0, std140) uniform SAMPLE_POINTS
 void main()
 {
 	vec2 P = gl_FragCoord.xy / textureSize(sNormalDepth, 0);
-	vec4 ND = textureLod(sNormalDepth, P, 0);
+	vec4 ND = texture(sNormalDepth, P);
 
 	vec3 N = ND.xyz;
 	float my_depth = ND.w;
@@ -59,12 +59,15 @@ void main()
 			z -= dir.z *f;
 
 			float their_depth =
-				textureLod(sNormalDepth, P + dir.xy * f * ssao_radius, 0).w;
-			float d = abs (their_depth - my_depth);
-			d *= d;
+				texture(sNormalDepth, P + dir.xy * f * ssao_radius).w;
+			
 
-			if ((z - their_depth) > 0.0)
+			if ((z  - their_depth) > 0.0)
+			{
+				float d = abs (their_depth - my_depth);
+				d *= d;
 				occ += 4.0 / (1.0 + d);
+			}
 		}
 	}
 	float ao_amount = (1.0 - occ / total);

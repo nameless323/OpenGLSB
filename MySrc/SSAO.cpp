@@ -30,7 +30,7 @@ static inline float RandomFloat()
 class SSAO : public sb6::application
 {
 public:
-    SSAO() : _paused(false), _ssaoLevel(1.0f), _ssaoRadius(0.05f), _showShading(true), _showAO(true), _weightByAngle(true), _randomizePoints(true), _pointCount(10)
+    SSAO() : _paused(false), _ssaoLevel(1.0f), _ssaoRadius(0.05f), _showShading(true), _showAO(true), _weightByAngle(false), _randomizePoints(true), _pointCount(10)
     {
     }
 
@@ -166,6 +166,7 @@ public:
         glUniform1f(Uniforms.SSAOUniforms.SSAORadius, _ssaoRadius * float(info.windowWidth) / 1000.0f);
         glUniform1f(Uniforms.SSAOUniforms.SSAOLevel, _showAO ? (_showShading ? 0.3 : 1.0f) : 0.0f);
         glUniform1i(Uniforms.SSAOUniforms.RandomizePoints, _randomizePoints ? 1 : 0);
+        glUniform1i(Uniforms.SSAOUniforms.WeightByAngle, _weightByAngle ? 1 : 0);
         glUniform1ui(Uniforms.SSAOUniforms.PointCount, _pointCount);
 
         glActiveTexture(GL_TEXTURE0);
@@ -293,4 +294,4 @@ private:
 };
 
 
-DECLARE_MAIN(SSAO);
+//DECLARE_MAIN(SSAO);
