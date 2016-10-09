@@ -1,3 +1,7 @@
+//
+// Constructing Bezier surface using tesselation.
+//
+
 #include <sb6.h>
 #include <cmath>
 
@@ -222,4 +226,3 @@ private:
     } _uniforms;
 };
 }
-//DECLARE_MAIN(Bezier);

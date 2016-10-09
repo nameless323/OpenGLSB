@@ -1,3 +1,7 @@
+//
+// GL multisampling demonstration.
+//
+
 #include <sb6.h>
 #include <object.h>
 

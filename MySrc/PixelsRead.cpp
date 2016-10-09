@@ -1,3 +1,7 @@
+//
+// Using read pixels to make screenshot.
+//
+
 #include <sb6.h>
 #include <object.h>
 

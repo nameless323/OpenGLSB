@@ -1,3 +1,7 @@
+//
+// Visualization of all alpha blend modes.
+//
+
 #include <sb6.h>
 #include <object.h>
 

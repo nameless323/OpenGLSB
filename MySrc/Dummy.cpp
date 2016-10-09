@@ -1,3 +1,7 @@
+//
+// Just simple quad.
+//
+
 #include <sb6.h>
 
 #include "Utils.h"
@@ -86,4 +90,3 @@ private:
     GLfloat projLocation = 3;
 };
 }
-//DECLARE_MAIN(Dummy);

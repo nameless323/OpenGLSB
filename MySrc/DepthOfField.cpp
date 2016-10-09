@@ -1,3 +1,7 @@
+//
+// Depth of field implementation using compute shader and prefix sum.
+//
+
 #include <sb6.h>
 #include <object.h>
 
@@ -273,4 +277,3 @@ private:
     float _focalDepth;
 };
 }
-//DECLARE_MAIN(DepthOfField);

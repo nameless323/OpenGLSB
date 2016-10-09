@@ -1,3 +1,7 @@
+//
+// GL line and polygon smooth example.
+//
+
 #include <sb6.h>
 #include <object.h>
 

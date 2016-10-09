@@ -1,3 +1,7 @@
+//
+// Example of enabling/disabling perspective correct interpolation.
+//
+
 #include <sb6.h>
 
 #include "Utils.h"

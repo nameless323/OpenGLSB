@@ -1,3 +1,7 @@
+//
+// Illustration of depth clamping.
+//
+
 #include <sb6.h>
 #include <object.h>
 
@@ -83,4 +87,3 @@ private:
     sb6::object _object;
 };
 }
-//DECLARE_MAIN(DepthClamp);

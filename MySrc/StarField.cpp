@@ -7,24 +7,24 @@
 
 namespace OpenGlSB
 {
-static unsigned int Seed = 0x13371337;
-
-static const unsigned int NUM_STARS = 2000;
-
-static float RandomFloat()
-{
-    float res;
-    unsigned int tmp;
-
-    Seed *= 16807;
-    tmp = Seed ^ (Seed >> 4) ^ (Seed << 15);
-    *((unsigned int *)&res) = (tmp >> 9) | 0x3F800000;
-    return (res - 1.0f);
-}
-
 class StarField : public sb6::application
 {
 public:
+    static const unsigned int NUM_STARS = 2000;
+//    static unsigned int RandSeed;
+    static const unsigned int RandSeed = 0x13371337;
+
+    static float RandomFloat()
+    {
+        float res;
+        unsigned int tmp;
+
+//        RandSeed *= 16807;
+        tmp = RandSeed ^ (RandSeed >> 4) ^ (RandSeed << 15);
+        *((unsigned int *)&res) = (tmp >> 9) | 0x3F800000;
+        return (res - 1.0f);
+    }
+
     void startup()
     {
         //		_renderingProgram.CreateAndLinkProgram("Shaders/Common/Default.vert", "Shaders/Common/Default.frag");
@@ -69,7 +69,6 @@ public:
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
 
-
         _renderingProgram.Use();
     }
 
@@ -91,9 +90,9 @@ public:
                                               0.1f,
                                               1000.0f);
         t *= 0.3f;
-//        t -= floor(t);
+        //        t -= floor(t);
         glViewport(0, 0, info.windowWidth, info.windowHeight);
-        
+
         glUniform1f(Uniforms.Time, t);
         glUniformMatrix4fv(Uniforms.Proj, 1, GL_FALSE, proj);
 

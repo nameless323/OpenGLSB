@@ -1,3 +1,8 @@
+//
+// Example of usage different tesselation modes.
+// Make switch using "W" key
+//
+
 #include <sb6.h>
 
 #include "vmath.h"
@@ -94,4 +99,3 @@ private:
     int _index;
 };
 }
-//DECLARE_MAIN(TessModes);

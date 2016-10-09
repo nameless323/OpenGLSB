@@ -1,3 +1,7 @@
+//
+// Rim light demonstration.
+//
+
 #include <sb6.h>
 #include <object.h>
 

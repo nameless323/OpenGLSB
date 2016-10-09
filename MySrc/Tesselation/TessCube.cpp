@@ -1,3 +1,7 @@
+//
+// Tesselation of a cube.
+//
+
 #include <sb6.h>
 
 #include "vmath.h"
@@ -169,4 +173,3 @@ private:
     mat4 rotationMat;
 };
 }
-//DECLARE_MAIN(TessCube);

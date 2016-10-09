@@ -1,3 +1,7 @@
+//
+// Clipping with custom defined plane and sphere.
+//
+
 #include <sb6.h>
 #include <cmath>
 #include <sstream>
@@ -98,4 +102,3 @@ private:
     }
 };
 }
-//DECLARE_MAIN(CustomClipping);

@@ -1,3 +1,7 @@
+//
+// Using transform feedback for particles simulation.
+//
+
 #include <sb6.h>
 #include <sstream>
 #include <shader.h>

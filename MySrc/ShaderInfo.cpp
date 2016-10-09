@@ -1,3 +1,7 @@
+//
+// Example of shader errors/status output.
+//
+
 #include <sb6.h>
 #include <cmath>
 #include <iostream>

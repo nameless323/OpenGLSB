@@ -1,3 +1,7 @@
+//
+// Render to texture demonstration.
+//
+
 #include <sb6.h>
 #include <object.h>
 

@@ -1,3 +1,7 @@
+//
+// Simple example of usage tesselation and geometry shaders.
+//
+
 #include <sb6.h>
 
 #include "../ShaderProgram.h"
@@ -54,4 +58,3 @@ private:
     GLuint _vao;
 };
 }
-//DECLARE_MAIN(TessAndGeom);

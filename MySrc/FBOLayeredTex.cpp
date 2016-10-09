@@ -1,3 +1,7 @@
+//
+// Using tex array and fbo to create bunch of rotating toruses.
+//
+
 #include <sb6.h>
 #include <object.h>
 
@@ -151,4 +155,3 @@ private:
     sb6::object _object;
 };
 }
-//DECLARE_MAIN(FBOLayeredTex);

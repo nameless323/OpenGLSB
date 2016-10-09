@@ -1,3 +1,7 @@
+//
+// Shader program helper class.
+//
+
 #pragma once
 
 #include <string>
@@ -33,20 +37,50 @@ class ShaderProgram
 public:
     ShaderProgram();
     ~ShaderProgram();
+    /**
+     * \brief Create shader program.
+     */
     void CreateProgram();
+    /**
+     * \brief Create and link program.
+     * \param vertFilename Filename for vertex shader.
+     * \param fragFilename Filename for fragment shader.
+     */
     void CreateAndLinkProgram(std::string vertFilename, std::string fragFilename);
+    /**
+     * \brief Delete shader.
+     */
     void DeleteProgram();
+    /**
+     * \brief Attach shader to program.
+     */
     void AttachShader(std::string filename);
+    /**
+     * \brief Get shader program handler.
+     */
     GLuint GetHandler();
+    /**
+     * \brief Check if shader is linked.
+     */
     bool IsLinked();
+    /**
+     * \brief Use shader program.
+     */
     void Use();
+    /**
+     * \brief Link shader program.
+     */
     void Link();
+    /**
+     * \brief Delete all shaders from program.
+     */
     void ClearShaders();
     void SetUniform(float val, std::string name);
     void SetUniform(float val, int index);
     void SetUniform(int val, std::string name);
     void SetUniform(int val, int index);
     //todo blabla other uniform and vertex attribs
+
 private:
     void AddSourceToShader(std::string filename, GLuint shader);
     bool CheckShader(GLuint shader, GLint shaderType, std::string filename);

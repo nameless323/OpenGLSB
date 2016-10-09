@@ -1,3 +1,7 @@
+//
+// Flocking simulation using compute shader.
+//
+
 #include <sb6.h>
 #include <cmath>
 #include <object.h>
@@ -178,4 +182,3 @@ private:
     GLuint _frameIndex;
 };
 }
-//DECLARE_MAIN(Flocking);

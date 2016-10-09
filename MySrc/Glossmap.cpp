@@ -1,3 +1,7 @@
+//
+// Example of gloss map usage.
+//
+
 #include <sb6.h>
 #include <sb6ktx.h>
 #include <object.h>

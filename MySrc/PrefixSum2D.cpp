@@ -1,6 +1,10 @@
 #include <sb6.h>
 #include <sb6ktx.h>
 
+//
+// Using prefix sum to blur image.
+//
+
 #include "Utils.h"
 #include "vmath.h"
 #include "ShaderProgram.h"
@@ -8,19 +12,7 @@
 namespace OpenGlSB
 {
 #define NUM_ELEMENTS 2048
-
-static float RandomFloat()
-{
-    static unsigned int Seed = 0x13371337;
-    float res;
-    unsigned int tmp;
-
-    Seed *= 16807;
-    tmp = Seed ^ (Seed >> 4) ^ (Seed << 15);
-    *((unsigned int *)&res) = (tmp >> 9) | 0x3F800000;
-    return (res - 1.0f);
-}
-
+    
 class PrefixSum2D : public sb6::application
 {
 public:

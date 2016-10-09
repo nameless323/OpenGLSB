@@ -1,3 +1,7 @@
+//
+// Generate the quad in geometry shader.
+//
+
 #include <sb6.h>
 
 #include <object.h>

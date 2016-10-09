@@ -1,3 +1,7 @@
+//
+// Using transform feedback to simulate cloth like greed.
+//
+
 #include <sb6.h>
 #include <vmath.h>
 #include <shader.h>

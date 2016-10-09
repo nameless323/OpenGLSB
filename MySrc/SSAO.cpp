@@ -1,3 +1,7 @@
+//
+// SSAO implementation.
+//
+
 #include <sb6.h>
 #include <object.h>
 
@@ -9,25 +13,25 @@ namespace OpenGlSB
 {
 using namespace vmath;
 
-static unsigned int seed = 0x13371337;
-
-static float RandomFloat()
-{
-    float res;
-    unsigned int tmp;
-
-    seed *= 16807;
-
-    tmp = seed ^ (seed >> 4) ^ (seed << 15);
-
-    *((unsigned int *)&res) = (tmp >> 9) | 0x3F800000;
-
-    return (res - 1.0f);
-}
-
 class SSAO : public sb6::application
 {
 public:
+    static unsigned int randomSeed;
+
+    static float GetRandomFloat()
+    {
+        float res;
+        unsigned int tmp;
+
+        randomSeed *= 16807;
+
+        tmp = randomSeed ^ (randomSeed >> 4) ^ (randomSeed << 15);
+
+        *((unsigned int *)&res) = (tmp >> 9) | 0x3F800000;
+
+        return (res - 1.0f);
+    }
+    
     SSAO() : _paused(false), _ssaoLevel(1.0f), _ssaoRadius(0.05f), _showShading(true), _showAO(true), _weightByAngle(false), _randomizePoints(true), _pointCount(10)
     {
     }
@@ -80,9 +84,9 @@ public:
         {
             do
             {
-                pointData.Point[i][0] = RandomFloat() * 2.0f - 1.0f;
-                pointData.Point[i][1] = RandomFloat() * 2.0f - 1.0f;
-                pointData.Point[i][2] = RandomFloat();
+                pointData.Point[i][0] = GetRandomFloat() * 2.0f - 1.0f;
+                pointData.Point[i][1] = GetRandomFloat() * 2.0f - 1.0f;
+                pointData.Point[i][2] = GetRandomFloat();
                 pointData.Point[i][3] = 0.0f;
             }
             while (length(pointData.Point[i]) > 1.0f);
@@ -90,10 +94,10 @@ public:
         }
         for (int i = 0; i < 256; i++)
         {
-            pointData.RandomVectors[i][0] = RandomFloat();
-            pointData.RandomVectors[i][1] = RandomFloat();
-            pointData.RandomVectors[i][2] = RandomFloat();
-            pointData.RandomVectors[i][3] = RandomFloat();
+            pointData.RandomVectors[i][0] = GetRandomFloat();
+            pointData.RandomVectors[i][1] = GetRandomFloat();
+            pointData.RandomVectors[i][2] = GetRandomFloat();
+            pointData.RandomVectors[i][3] = GetRandomFloat();
         }
         glGenBuffers(1, &_pointsBuffer);
         glBindBuffer(GL_UNIFORM_BUFFER, _pointsBuffer);
@@ -142,8 +146,8 @@ public:
         glUniformMatrix4fv(Uniforms.Render.Proj, 1, GL_FALSE, proj_matrix);
 
         mat4 modelMatrix = translate(0.0f, -5.0f, 0.0f) *
-            rotate(f * 5.0f, 0.0f, 1.0f, 0.0f) *
-            mat4::identity();
+                rotate(f * 5.0f, 0.0f, 1.0f, 0.0f) *
+                mat4::identity();
         glUniformMatrix4fv(Uniforms.Render.MV, 1, GL_FALSE, lookat * modelMatrix);
 
         glUniform1f(Uniforms.Render.ShadingLevel, _showShading ? (_showAO ? 0.7f : 1.0f) : 0.0f);
@@ -151,9 +155,9 @@ public:
         _object.render();
 
         modelMatrix = translate(0.0f, -4.5f, 0.0f) *
-            rotate(f * 5.0f, 0.0f, 1.0f, 0.0f) *
-            scale(4000.0f, 0.1f, 4000.0f) *
-            mat4::identity();
+                rotate(f * 5.0f, 0.0f, 1.0f, 0.0f) *
+                scale(4000.0f, 0.1f, 4000.0f) *
+                mat4::identity();
         glUniformMatrix4fv(Uniforms.Render.MV, 1, GL_FALSE, lookat * modelMatrix);
 
         _cube.render();
@@ -212,33 +216,33 @@ public:
         {
             switch (key)
             {
-            case 'N':
-                _weightByAngle = !_weightByAngle;
-                break;
-            case 'R':
-                _randomizePoints = !_randomizePoints;
-                break;
-            case 'S':
-                _pointCount++;
-                break;
-            case 'X':
-                _pointCount--;
-                break;
-            case 'Q':
-                _showShading = !_showShading;
-                break;
-            case 'W':
-                _showAO = !_showAO;
-                break;
-            case 'A':
-                _ssaoRadius += 0.01f;
-                break;
-            case 'Z':
-                _ssaoRadius -= 0.01f;
-                break;
-            case 'P':
-                _paused = !_paused;
-                break;
+                case 'N':
+                    _weightByAngle = !_weightByAngle;
+                    break;
+                case 'R':
+                    _randomizePoints = !_randomizePoints;
+                    break;
+                case 'S':
+                    _pointCount++;
+                    break;
+                case 'X':
+                    _pointCount--;
+                    break;
+                case 'Q':
+                    _showShading = !_showShading;
+                    break;
+                case 'W':
+                    _showAO = !_showAO;
+                    break;
+                case 'A':
+                    _ssaoRadius += 0.01f;
+                    break;
+                case 'Z':
+                    _ssaoRadius -= 0.01f;
+                    break;
+                case 'P':
+                    _paused = !_paused;
+                    break;
             }
         }
     }
@@ -290,4 +294,6 @@ private:
         vec4 RandomVectors[256];
     };
 };
+
+unsigned int SSAO::randomSeed = 0x13371337;
 }

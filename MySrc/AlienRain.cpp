@@ -1,3 +1,7 @@
+//
+// Using texture array to texture fallen sprites.
+//
+
 #include <sb6.h>
 #include <sb6ktx.h>
 #include <cmath>
@@ -139,4 +143,3 @@ private:
     GLfloat projLocation = 3;
 };
 }
-//DECLARE_MAIN(AlienRain);

@@ -1,3 +1,7 @@
+//
+// Shaders subroutine example.
+//
+
 #include <sb6.h>
 #include <sstream>
 

@@ -1,3 +1,7 @@
+//
+// Using 2d reflection map.
+//
+
 #include <sb6.h>
 #include <sb6ktx.h>
 #include <object.h>

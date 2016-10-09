@@ -1,3 +1,7 @@
+//
+// Prefix sum computation using compute shaders.
+//
+
 #include <sb6.h>
 
 #include "Utils.h"

@@ -1,3 +1,7 @@
+//
+// Create shadows using shadow map
+//
+
 #include <sb6.h>
 #include <cmath>
 #include <object.h>

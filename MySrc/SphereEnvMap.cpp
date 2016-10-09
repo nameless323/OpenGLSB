@@ -1,3 +1,7 @@
+//
+// Using spherical environment mapping.
+//
+
 #include <sb6.h>
 #include <sb6ktx.h>
 #include <object.h>

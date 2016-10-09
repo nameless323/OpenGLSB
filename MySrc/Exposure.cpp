@@ -1,3 +1,7 @@
+//
+// Exposure effect. You can add/substract exposure using +/- keys.
+//
+
 #include <sb6.h>
 #include <object.h>
 #include <sb6ktx.h>
@@ -89,4 +93,3 @@ private:
     sb6::object _object;
 };
 }
-//DECLARE_MAIN(Exposure);

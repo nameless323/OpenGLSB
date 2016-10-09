@@ -1,3 +1,7 @@
+//
+// Tesselation based terrain.
+//
+
 #include <sb6.h>
 
 #include <sb6ktx.h>
@@ -147,4 +151,3 @@ private:
     } _uniforms;
 };
 }
-//DECLARE_MAIN(Terrain);

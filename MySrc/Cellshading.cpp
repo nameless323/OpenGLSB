@@ -1,3 +1,7 @@
+//
+// Cellshading effect on torus.
+//
+
 #include <sb6.h>
 #include <cmath>
 #include <iostream>
@@ -86,4 +90,3 @@ private:
     sb6::object _object;
 };
 }
-//DECLARE_MAIN(Cellshading);

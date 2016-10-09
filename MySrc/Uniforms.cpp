@@ -1,3 +1,7 @@
+//
+// Uniform block usage example.
+//
+
 #include <sb6.h>
 #include <cmath>
 #include <iostream>

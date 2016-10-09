@@ -1,3 +1,7 @@
+//
+// Creation of simple gl window.
+//
+
 #include <sb6.h>
 #include <sstream>
 #include <shader.h>

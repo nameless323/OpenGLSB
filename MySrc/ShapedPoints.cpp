@@ -1,3 +1,7 @@
+//
+// Using GL_POINT to draw custom shape points.
+//
+
 #include <sb6.h>
 
 #include "Utils.h"
@@ -10,20 +14,21 @@ static unsigned int Seed = 0x13371337;
 
 static const unsigned int NUM_STARS = 2000;
 
-static float RandomFloat()
-{
-    float res;
-    unsigned int tmp;
-
-    Seed *= 16807;
-    tmp = Seed ^ (Seed >> 4) ^ (Seed << 15);
-    *((unsigned int *)&res) = (tmp >> 9) | 0x3F800000;
-    return (res - 1.0f);
-}
 
 class ShapedPoints : public sb6::application
 {
 public:
+    static float RandomFloat()
+    {
+        float res;
+        unsigned int tmp;
+
+        Seed *= 16807;
+        tmp = Seed ^ (Seed >> 4) ^ (Seed << 15);
+        *((unsigned int *)&res) = (tmp >> 9) | 0x3F800000;
+        return (res - 1.0f);
+    }
+
     void startup()
     {
         //		_renderingProgram.CreateAndLinkProgram("Shaders/Common/Default.vert", "Shaders/Common/Default.frag");
@@ -34,7 +39,7 @@ public:
         glGenVertexArrays(1, &_vao);
         glBindVertexArray(_vao);
 
-       
+
         _renderingProgram.Use();
     }
 
@@ -45,8 +50,8 @@ public:
 
     void render(double currentTime)
     {
-        const GLfloat bckColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-        const GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+        const GLfloat bckColor[] = {0.0f, 0.0f, 0.0f, 1.0f};
+        const GLfloat white[] = {1.0f, 1.0f, 1.0f, 1.0f};
         glClearBufferfv(GL_COLOR, 0, bckColor);
         glClearBufferfv(GL_DEPTH, 0, white);
 
@@ -63,7 +68,6 @@ public:
 
         glBindVertexArray(0);
         glDeleteVertexArrays(1, &_vao);
-
     }
 
 private:

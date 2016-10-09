@@ -1,3 +1,7 @@
+//
+// Triangl tesselation using different tesselation modes. "M" - switch.
+//
+
 #include <sb6.h>
 
 #include "vmath.h"
@@ -89,4 +93,3 @@ private:
     int _index;
 };
 }
-//DECLARE_MAIN(TessSubdivsionModes);

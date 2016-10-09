@@ -1,3 +1,7 @@
+//
+// Tonemapping implementation.
+//
+
 #include <sb6.h>
 #include <object.h>
 #include <sb6ktx.h>

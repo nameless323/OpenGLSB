@@ -1,3 +1,7 @@
+//
+// Using single vertex and two fragment shader to show shade pipline objects.
+//
+
 #include <sb6.h>
 #include <cmath>
 #include <iostream>
@@ -8,51 +12,52 @@
 
 namespace OpenGlSB
 {
-GLuint CreateShader(const char* filename, GLenum type)
-{
-    GLuint shader = glCreateShader(type);
-    FILE* fp;
-    size_t filesize;
-    char* data;
-
-    fp = fopen(filename, "rb");
-    fseek(fp, 0, SEEK_END);
-    filesize = ftell(fp);
-    fseek(fp, 0, SEEK_SET);
-
-    data = new char[filesize + 1];
-    fread(data, 1, filesize, fp);
-    data[filesize] = 0;
-    fclose(fp);
-
-    glShaderSource(shader, 1, &data, nullptr);
-    glCompileShader(shader);
-
-    GLint status;
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-
-    if (status == GL_FALSE)
-    {
-        OutputDebugStringA("---------------\n");
-        OutputDebugStringA("Shader Error:\n");
-        GLint len;
-        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &len);
-        char* log = new char[len + 1];
-
-        GLsizei byteWritten;
-        glGetShaderInfoLog(shader, len, &byteWritten, log);
-        log[len] = '\0';
-        OutputDebugStringA(log);
-        OutputDebugStringA("---------------\n");
-        delete[] log;
-    }
-    delete[] data;
-    return shader;
-}
-
 class SeparateShaderPipeline : public sb6::application
 {
 public:
+
+    GLuint CreateShader(const char* filename, GLenum type)
+    {
+        GLuint shader = glCreateShader(type);
+        FILE* fp;
+        size_t filesize;
+        char* data;
+
+        fp = fopen(filename, "rb");
+        fseek(fp, 0, SEEK_END);
+        filesize = ftell(fp);
+        fseek(fp, 0, SEEK_SET);
+
+        data = new char[filesize + 1];
+        fread(data, 1, filesize, fp);
+        data[filesize] = 0;
+        fclose(fp);
+
+        glShaderSource(shader, 1, &data, nullptr);
+        glCompileShader(shader);
+
+        GLint status;
+        glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
+
+        if (status == GL_FALSE)
+        {
+            OutputDebugStringA("---------------\n");
+            OutputDebugStringA("Shader Error:\n");
+            GLint len;
+            glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &len);
+            char* log = new char[len + 1];
+
+            GLsizei byteWritten;
+            glGetShaderInfoLog(shader, len, &byteWritten, log);
+            log[len] = '\0';
+            OutputDebugStringA(log);
+            OutputDebugStringA("---------------\n");
+            delete[] log;
+        }
+        delete[] data;
+        return shader;
+    }
+
     void startup()
     {
         _vertProgram = glCreateProgram();

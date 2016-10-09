@@ -1,3 +1,7 @@
+//
+// Asteroid field using indirect drawning.
+//
+
 #include <sb6.h>
 #include <cmath>
 #include <sstream>

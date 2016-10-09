@@ -1,3 +1,7 @@
+//
+// Texture usage example.
+//
+
 #include <sb6.h>
 #include <sb6ktx.h>
 #include <cmath>

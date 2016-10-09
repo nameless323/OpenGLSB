@@ -1,3 +1,7 @@
+//
+// Julia set visualization.
+//
+
 #include <sb6.h>
 #include <cmath>
 

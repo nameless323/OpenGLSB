@@ -1,3 +1,7 @@
+//
+// Grass field using instancing technique.
+//
+
 #include <sb6.h>
 #include <cmath>
 #include <sstream>

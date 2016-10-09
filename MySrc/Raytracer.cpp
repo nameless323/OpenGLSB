@@ -1,3 +1,7 @@
+//
+// Implementation of gpu raytracing.
+//
+
 #include <sb6.h>
 
 #include <cmath>

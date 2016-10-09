@@ -1,3 +1,7 @@
+//
+// Using multiple scissors rect example.
+//
+
 #include <sb6.h>
 #include <object.h>
 

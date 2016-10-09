@@ -1,3 +1,7 @@
+//
+// Bunch of flying cubes.
+//
+
 #include <sb6.h>
 #include <cmath>
 #include <sstream>
@@ -147,4 +151,3 @@ private:
     };
 };
 }
-//DECLARE_MAIN(Cubes);

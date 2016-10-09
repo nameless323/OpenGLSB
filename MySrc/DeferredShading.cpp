@@ -1,3 +1,7 @@
+//
+// Implementation of deffered shadind to handle multiple light sources.
+//
+
 #include <sb6.h>
 #include <cmath>
 #include <object.h>

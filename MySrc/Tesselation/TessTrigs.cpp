@@ -1,3 +1,7 @@
+//
+// Just triangle tesselation and nothing more)
+//
+
 #include <sb6.h>
 
 #include "../Utils.h"
@@ -58,4 +62,3 @@ private:
     ShaderProgram _renderingProgram;
 };
 }
-//DECLARE_MAIN(TessTrigs);

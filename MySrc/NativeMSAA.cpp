@@ -1,3 +1,7 @@
+//
+// System MSAA demonstration.
+//
+
 #include <sb6.h>
 #include <object.h>
 

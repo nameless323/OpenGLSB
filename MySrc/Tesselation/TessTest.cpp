@@ -1,3 +1,7 @@
+//
+// Triangle and quad tesselation.
+//
+
 #include <sb6.h>
 
 #include "vmath.h"
@@ -124,4 +128,3 @@ private:
     GLfloat projLocation = 3;
 };
 }
-//DECLARE_MAIN(TessTest);
