@@ -1,15 +1,14 @@
 #include <sb6.h>
 #include <cmath>
-#include <iostream>
 #include <sb6ktx.h>
-#include <sstream>
-#include <shader.h>
+#include <object.h>
+
 #include "Utils.h"
 #include "vmath.h"
 #include "ShaderProgram.h"
-#include <object.h>
 
-
+namespace OpenGlSB
+{
 class CubemapEnv : public sb6::application
 {
 public:
@@ -73,12 +72,12 @@ public:
                                               0.1f,
                                               1000.0f);
         vmath::mat4 mv = vmath::translate(0.0f, 0.0f, -15.0f) *
-            vmath::rotate((float)currentTime, 1.0f, 0.0f, 0.0f) *
-            vmath::rotate((float)currentTime * 1.1f, 0.0f, 1.0f, 0.0f) *
-            vmath::translate(0.0f, -4.0f, 0.0f);
+                vmath::rotate((float)currentTime, 1.0f, 0.0f, 0.0f) *
+                vmath::rotate((float)currentTime * 1.1f, 0.0f, 1.0f, 0.0f) *
+                vmath::translate(0.0f, -4.0f, 0.0f);
         vmath::mat4 view = lookat(vmath::vec3(15.0f * sinf(t), 0.0f, 15.0f * cosf(t)),
-                                         vmath::vec3(0.0f, 0.0f, 0.0f),
-                                         vmath::vec3(0.0f, 1.0f, 0.0f));
+                                  vmath::vec3(0.0f, 0.0f, 0.0f),
+                                  vmath::vec3(0.0f, 1.0f, 0.0f));
         _skyboxShader.Use();
         glUniformMatrix4fv(Uniforms.View, 1, GL_FALSE, view);
         glBindVertexArray(_skyboxVAO);
@@ -91,7 +90,6 @@ public:
 
 
         _object.render();
-
     }
 
     void onKey(int key, int action)
@@ -100,10 +98,10 @@ public:
         {
             switch (key)
             {
-            case 'E':
-                _envMapIndex = (_envMapIndex + 1) % 3;
-                _texEnvMap = _envMaps[_envMapIndex];
-                break;
+                case 'E':
+                    _envMapIndex = (_envMapIndex + 1) % 3;
+                    _texEnvMap = _envMaps[_envMapIndex];
+                    break;
             }
         }
     }
@@ -125,6 +123,5 @@ private:
     int _envMapIndex;
     sb6::object _object;
 };
-
+}
 //DECLARE_MAIN(CubemapEnv);
-

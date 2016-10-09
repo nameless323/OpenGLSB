@@ -1,8 +1,11 @@
 #include <sb6.h>
-#include "vmath.h"
-#include "ShaderProgram.h"
 #include <object.h>
 
+#include "vmath.h"
+#include "ShaderProgram.h"
+
+namespace OpenGlSB
+{
 using vmath::mat4;
 
 class PixelsRead : public sb6::application
@@ -160,6 +163,4 @@ private:
         MODE_READ_PBO_FRAME4
     } Mode;
 };
-
-//DECLARE_MAIN(PixelsRead);
-
+}

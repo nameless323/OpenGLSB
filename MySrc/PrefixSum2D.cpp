@@ -1,13 +1,12 @@
 #include <sb6.h>
-#include <cmath>
-#include <iostream>
 #include <sb6ktx.h>
-#include <sstream>
-#include <shader.h>
+
 #include "Utils.h"
 #include "vmath.h"
 #include "ShaderProgram.h"
 
+namespace OpenGlSB
+{
 #define NUM_ELEMENTS 2048
 
 static float RandomFloat()
@@ -107,6 +106,4 @@ private:
     float _inputData[NUM_ELEMENTS];
     float _outputData[NUM_ELEMENTS];
 };
-
-//DECLARE_MAIN(PrefixSum2D);
-
+}

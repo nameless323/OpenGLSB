@@ -1,15 +1,13 @@
 #include <sb6.h>
-#include <cmath>
-#include <iostream>
 #include <sb6ktx.h>
-#include <sstream>
-#include <shader.h>
+#include <object.h>
+
 #include "Utils.h"
 #include "vmath.h"
 #include "ShaderProgram.h"
-#include <object.h>
 
-
+namespace OpenGlSB
+{
 class SphereEnvMap : public sb6::application
 {
 public:
@@ -45,8 +43,8 @@ public:
     void render(double currentTime) override
     {
         float t = (float)currentTime;
-        static const float black[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-        static const float green[] = { 0.0f, 0.25f, 0.0f, 1.0f };
+        static const float black[] = {0.0f, 0.0f, 0.0f, 1.0f};
+        static const float green[] = {0.0f, 0.25f, 0.0f, 1.0f};
         static const float one = 1.0f;
         static double lastTime = 0.0;
         static double totalTime = 0.0;
@@ -59,14 +57,14 @@ public:
         _shader.Use();
 
         vmath::mat4 proj = vmath::perspective(60.0f,
-            (float)info.windowWidth / (float)info.windowHeight,
-            0.1f,
-            1000.0f);
+                                              (float)info.windowWidth / (float)info.windowHeight,
+                                              0.1f,
+                                              1000.0f);
         glUniformMatrix4fv(Uniforms.Proj, 1, GL_FALSE, proj);
         vmath::mat4 mv = vmath::translate(0.0f, 0.0f, -15.0f) *
-            vmath::rotate((float)currentTime, 1.0f, 0.0f, 0.0f) *
-            vmath::rotate((float)currentTime * 1.1f, 0.0f, 1.0f, 0.0f) *
-            vmath::translate(0.0f, -4.0f, 0.0f);
+                vmath::rotate((float)currentTime, 1.0f, 0.0f, 0.0f) *
+                vmath::rotate((float)currentTime * 1.1f, 0.0f, 1.0f, 0.0f) *
+                vmath::translate(0.0f, -4.0f, 0.0f);
         glUniformMatrix4fv(Uniforms.MV, 1, GL_FALSE, mv);
 
         _object.render();
@@ -78,10 +76,10 @@ public:
         {
             switch (key)
             {
-            case 'E':
-                _envMapIndex = (_envMapIndex + 1) % 3;
-                _texEnvMap = _envMaps[_envMapIndex];
-                break;
+                case 'E':
+                    _envMapIndex = (_envMapIndex + 1) % 3;
+                    _texEnvMap = _envMaps[_envMapIndex];
+                    break;
             }
         }
     }
@@ -94,11 +92,10 @@ private:
         GLuint MV;
         GLuint Proj;
     } Uniforms;
+
     GLuint _texEnvMap;
     GLuint _envMaps[3];
     int _envMapIndex;
     sb6::object _object;
 };
-
-//DECLARE_MAIN(SphereEnvMap);
-
+}

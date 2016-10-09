@@ -1,12 +1,13 @@
 #include <sb6.h>
+
 #include <cmath>
-#include <iostream>
-#include <sstream>
-#include <shader.h>
+
 #include "Utils.h"
 #include "vmath.h"
 #include "ShaderProgram.h"
 
+namespace OpenGlSB
+{
 using namespace vmath;
 
 class Raytracer : public sb6::application
@@ -415,5 +416,4 @@ private:
     DEBUG_MODE _debugMode;
     bool _paused;
 };
-
-DECLARE_MAIN(Raytracer);
+}

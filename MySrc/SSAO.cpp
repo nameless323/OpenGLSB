@@ -1,19 +1,17 @@
 #include <sb6.h>
-#include <cmath>
-#include <iostream>
-#include <sstream>
-#include <shader.h>
+#include <object.h>
+
 #include "Utils.h"
 #include "vmath.h"
 #include "ShaderProgram.h"
-#include <object.h>
-#include <sb6ktx.h>
 
+namespace OpenGlSB
+{
 using namespace vmath;
 
 static unsigned int seed = 0x13371337;
 
-static inline float RandomFloat()
+static float RandomFloat()
 {
     float res;
     unsigned int tmp;
@@ -292,6 +290,4 @@ private:
         vec4 RandomVectors[256];
     };
 };
-
-
-//DECLARE_MAIN(SSAO);
+}

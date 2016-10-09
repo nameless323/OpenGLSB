@@ -1,17 +1,14 @@
 #include <sb6.h>
-#include <cmath>
-#include <iostream>
-#include <sb6ktx.h>
-#include <sstream>
-#include <shader.h>
+#include <object.h>
+
 #include "Utils.h"
 #include "vmath.h"
 #include "ShaderProgram.h"
-#include <object.h>
 
+namespace OpenGlSB
+{
 #define FBO_SIZE 2048
 #define FRUSTUM_DEPTH 1000
-
 
 class DepthOfField : public sb6::application
 {
@@ -275,6 +272,5 @@ private:
     float _focalDistance;
     float _focalDepth;
 };
-
+}
 //DECLARE_MAIN(DepthOfField);
-

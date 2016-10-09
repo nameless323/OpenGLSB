@@ -1,13 +1,11 @@
 #include <sb6.h>
 #include <cmath>
-#include <iostream>
-#include <sstream>
-#include <shader.h>
+
 #include "Utils.h"
-#include "vmath.h"
 #include "ShaderProgram.h"
 
-
+namespace OpenGlSB
+{
 static const unsigned char palette[] =
 {
     0xFF, 0x00, 0x00, 0xFF, 0x0E, 0x03, 0xFF, 0x1C,
@@ -108,7 +106,6 @@ static const unsigned char palette[] =
     0x1D, 0x00, 0xF6, 0x13, 0x00, 0xFF, 0x09, 0x00,
 };
 
-
 class JuliaFractal : public sb6::application
 {
 public:
@@ -135,8 +132,7 @@ public:
         glTexStorage1D(GL_TEXTURE_1D, 8, GL_RGB8, 256);
         glTexSubImage1D(GL_TEXTURE_1D, 0, 0, 256, GL_RGB, GL_UNSIGNED_BYTE, palette);
         glGenerateMipmap(GL_TEXTURE_1D);
-
-
+        
         _renderingProgram.Use();
     }
 
@@ -242,6 +238,4 @@ private:
     float _yOffset;
     
 };
-
-//DECLARE_MAIN(JuliaFractal);
-
+}

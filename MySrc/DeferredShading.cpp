@@ -1,14 +1,14 @@
 #include <sb6.h>
 #include <cmath>
-#include <iostream>
-#include <sstream>
-#include <shader.h>
-#include "Utils.h"
-#include "vmath.h"
-#include "ShaderProgram.h"
 #include <object.h>
 #include <sb6ktx.h>
 
+#include "Utils.h"
+#include "vmath.h"
+#include "ShaderProgram.h"
+
+namespace OpenGlSB
+{
 using namespace vmath;
 
 enum
@@ -275,5 +275,4 @@ private:
     };
 #pragma pack (pop)
 };
-
-//DECLARE_MAIN(DeferredShading);
+}

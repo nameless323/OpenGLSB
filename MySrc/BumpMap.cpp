@@ -1,15 +1,14 @@
 #include <sb6.h>
 #include <cmath>
-#include <iostream>
 #include <sb6ktx.h>
-#include <sstream>
-#include <shader.h>
+#include <object.h>
+
 #include "Utils.h"
 #include "vmath.h"
 #include "ShaderProgram.h"
-#include <object.h>
 
-
+namespace OpenGlSB
+{
 class BumpMap : public sb6::application
 {
 public:
@@ -112,6 +111,5 @@ private:
     bool _rimEnable;
     bool _paused;
 };
-
+}
 //DECLARE_MAIN(BumpMap);
-

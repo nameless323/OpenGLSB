@@ -1,8 +1,12 @@
 #include <sb6.h>
-#include "vmath.h"
-#include "../ShaderProgram.h"
+
 #include <object.h>
 
+#include "vmath.h"
+#include "../ShaderProgram.h"
+
+namespace OpenGlSB
+{
 using vmath::mat4;
 
 class GeomShaderCulling : public sb6::application
@@ -80,6 +84,6 @@ private:
 
 	sb6::object _object;
 };
-
+}
 //DECLARE_MAIN(GeomShaderCulling);
 

@@ -1,10 +1,13 @@
 #pragma once
+
 #include <string>
 #include <map>
-#include "sb6.h"
 #include <vector>
-#include <sstream>
 
+#include "sb6.h"
+
+namespace OpenGlSB
+{
 static const std::map<std::string, GLint> ShaderTypesMap
 {
     {".vert", GL_VERTEX_SHADER},
@@ -53,4 +56,4 @@ private:
     std::string GetFileExtension(std::string filename);
     std::vector<GLuint> _attachedShaders;
 };
-
+}

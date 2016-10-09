@@ -1,13 +1,14 @@
 #include <sb6.h>
 #include <cmath>
 #include <iostream>
-#include <sstream>
-#include <shader.h>
+#include <object.h>
+
 #include "Utils.h"
 #include "vmath.h"
 #include "ShaderProgram.h"
-#include <object.h>
 
+namespace OpenGlSB
+{
 class Cellshading : public sb6::application
 {
 public:
@@ -84,6 +85,5 @@ private:
     GLfloat projLocation = 3;
     sb6::object _object;
 };
-
+}
 //DECLARE_MAIN(Cellshading);
-

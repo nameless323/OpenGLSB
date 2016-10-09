@@ -1,13 +1,11 @@
 #include <sb6.h>
-#include <sb6ktx.h>
-#include <cmath>
-#include <iostream>
-#include <sstream>
-#include <shader.h>
+
 #include "Utils.h"
 #include "vmath.h"
 #include "ShaderProgram.h"
 
+namespace OpenGlSB
+{
 static unsigned int Seed = 0x13371337;
 
 static const unsigned int NUM_STARS = 2000;
@@ -85,6 +83,4 @@ private:
         float Proj;
     } Uniforms;
 };
-
-//DECLARE_MAIN(ShapedPoints);
-
+}

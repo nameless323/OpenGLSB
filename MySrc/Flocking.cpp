@@ -1,14 +1,13 @@
 #include <sb6.h>
 #include <cmath>
-#include <iostream>
-#include <sb6ktx.h>
-#include <sstream>
-#include <shader.h>
+#include <object.h>
+
 #include "Utils.h"
 #include "vmath.h"
 #include "ShaderProgram.h"
-#include <object.h>
 
+namespace OpenGlSB
+{
 enum
 {
     WORKGROUP_SIZE = 256,
@@ -178,6 +177,5 @@ private:
 
     GLuint _frameIndex;
 };
-
+}
 //DECLARE_MAIN(Flocking);
-
